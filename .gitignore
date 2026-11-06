@@ -3,6 +3,9 @@
 !/.gitignore
 !/Isabelle/
 !/Paper_Termination/
+!/Matlab_Code/
+/Matlab_Code/*
+!/Matlab_Code/Sandbox_Methods.mlx
 
 # Run logs, scratch and throwaway sessions
 /Isabelle/logs/
