@@ -1,0 +1,535 @@
+session DC_Tables in "Tables" = Perturbative_Termination +
+  options [timeout = 0]
+  theories
+    DC_Tables
+    DC_Split
+
+session DCX_0 in "S0" = DC_Tables +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_000
+    DCX_nc_000
+    DCX_c30_024
+    DCX_nc_024
+    DCX_c30_048
+    DCX_nc_048
+    DCX_c30_072
+    DCX_nc_072
+    DCX_c30_096
+    DCX_nc_096
+    DCX_c30_120
+    DCX_nc_120
+    DCX_c30_144
+    DCX_nc_144
+    DCX_c30_168
+    DCX_nc_168
+    DCX_c30_192
+    DCX_nc_192
+
+session DCX_1 in "S1" = DCX_0 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_001
+    DCX_nc_001
+    DCX_c30_025
+    DCX_nc_025
+    DCX_c30_049
+    DCX_nc_049
+    DCX_c30_073
+    DCX_nc_073
+    DCX_c30_097
+    DCX_nc_097
+    DCX_c30_121
+    DCX_nc_121
+    DCX_c30_145
+    DCX_nc_145
+    DCX_c30_169
+    DCX_nc_169
+    DCX_c30_193
+    DCX_nc_193
+
+session DCX_2 in "S2" = DCX_1 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_002
+    DCX_nc_002
+    DCX_c30_026
+    DCX_nc_026
+    DCX_c30_050
+    DCX_nc_050
+    DCX_c30_074
+    DCX_nc_074
+    DCX_c30_098
+    DCX_nc_098
+    DCX_c30_122
+    DCX_nc_122
+    DCX_c30_146
+    DCX_nc_146
+    DCX_c30_170
+    DCX_nc_170
+    DCX_c30_194
+    DCX_nc_194
+
+session DCX_3 in "S3" = DCX_2 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_003
+    DCX_nc_003
+    DCX_c30_027
+    DCX_nc_027
+    DCX_c30_051
+    DCX_nc_051
+    DCX_c30_075
+    DCX_nc_075
+    DCX_c30_099
+    DCX_nc_099
+    DCX_c30_123
+    DCX_nc_123
+    DCX_c30_147
+    DCX_nc_147
+    DCX_c30_171
+    DCX_nc_171
+    DCX_c30_195
+    DCX_nc_195
+
+session DCX_4 in "S4" = DCX_3 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_004
+    DCX_nc_004
+    DCX_c30_028
+    DCX_nc_028
+    DCX_c30_052
+    DCX_nc_052
+    DCX_c30_076
+    DCX_nc_076
+    DCX_c30_100
+    DCX_nc_100
+    DCX_c30_124
+    DCX_nc_124
+    DCX_c30_148
+    DCX_nc_148
+    DCX_c30_172
+    DCX_nc_172
+    DCX_c30_196
+    DCX_nc_196
+
+session DCX_5 in "S5" = DCX_4 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_005
+    DCX_nc_005
+    DCX_c30_029
+    DCX_nc_029
+    DCX_c30_053
+    DCX_nc_053
+    DCX_c30_077
+    DCX_nc_077
+    DCX_c30_101
+    DCX_nc_101
+    DCX_c30_125
+    DCX_nc_125
+    DCX_c30_149
+    DCX_nc_149
+    DCX_c30_173
+    DCX_nc_173
+    DCX_c30_197
+    DCX_nc_197
+
+session DCX_6 in "S6" = DCX_5 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_006
+    DCX_nc_006
+    DCX_c30_030
+    DCX_nc_030
+    DCX_c30_054
+    DCX_nc_054
+    DCX_c30_078
+    DCX_nc_078
+    DCX_c30_102
+    DCX_nc_102
+    DCX_c30_126
+    DCX_nc_126
+    DCX_c30_150
+    DCX_nc_150
+    DCX_c30_174
+    DCX_nc_174
+    DCX_c30_198
+    DCX_nc_198
+
+session DCX_7 in "S7" = DCX_6 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_007
+    DCX_nc_007
+    DCX_c30_031
+    DCX_nc_031
+    DCX_c30_055
+    DCX_nc_055
+    DCX_c30_079
+    DCX_nc_079
+    DCX_c30_103
+    DCX_nc_103
+    DCX_c30_127
+    DCX_nc_127
+    DCX_c30_151
+    DCX_nc_151
+    DCX_c30_175
+    DCX_nc_175
+    DCX_c30_199
+    DCX_nc_199
+
+session DCX_8 in "S8" = DCX_7 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_008
+    DCX_nc_008
+    DCX_c30_032
+    DCX_nc_032
+    DCX_c30_056
+    DCX_nc_056
+    DCX_c30_080
+    DCX_nc_080
+    DCX_c30_104
+    DCX_nc_104
+    DCX_c30_128
+    DCX_nc_128
+    DCX_c30_152
+    DCX_nc_152
+    DCX_c30_176
+    DCX_nc_176
+    DCX_c30_200
+    DCX_nc_200
+
+session DCX_9 in "S9" = DCX_8 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_009
+    DCX_nc_009
+    DCX_c30_033
+    DCX_nc_033
+    DCX_c30_057
+    DCX_nc_057
+    DCX_c30_081
+    DCX_nc_081
+    DCX_c30_105
+    DCX_nc_105
+    DCX_c30_129
+    DCX_nc_129
+    DCX_c30_153
+    DCX_nc_153
+    DCX_c30_177
+    DCX_nc_177
+    DCX_c30_201
+    DCX_nc_201
+
+session DCX_10 in "S10" = DCX_9 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_010
+    DCX_nc_010
+    DCX_c30_034
+    DCX_nc_034
+    DCX_c30_058
+    DCX_nc_058
+    DCX_c30_082
+    DCX_nc_082
+    DCX_c30_106
+    DCX_nc_106
+    DCX_c30_130
+    DCX_nc_130
+    DCX_c30_154
+    DCX_nc_154
+    DCX_c30_178
+    DCX_nc_178
+
+session DCX_11 in "S11" = DCX_10 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_011
+    DCX_nc_011
+    DCX_c30_035
+    DCX_nc_035
+    DCX_c30_059
+    DCX_nc_059
+    DCX_c30_083
+    DCX_nc_083
+    DCX_c30_107
+    DCX_nc_107
+    DCX_c30_131
+    DCX_nc_131
+    DCX_c30_155
+    DCX_nc_155
+    DCX_c30_179
+    DCX_nc_179
+
+session DCX_12 in "S12" = DCX_11 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_012
+    DCX_nc_012
+    DCX_c30_036
+    DCX_nc_036
+    DCX_c30_060
+    DCX_nc_060
+    DCX_c30_084
+    DCX_nc_084
+    DCX_c30_108
+    DCX_nc_108
+    DCX_c30_132
+    DCX_nc_132
+    DCX_c30_156
+    DCX_nc_156
+    DCX_c30_180
+    DCX_nc_180
+
+session DCX_13 in "S13" = DCX_12 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_013
+    DCX_nc_013
+    DCX_c30_037
+    DCX_nc_037
+    DCX_c30_061
+    DCX_nc_061
+    DCX_c30_085
+    DCX_nc_085
+    DCX_c30_109
+    DCX_nc_109
+    DCX_c30_133
+    DCX_nc_133
+    DCX_c30_157
+    DCX_nc_157
+    DCX_c30_181
+    DCX_nc_181
+
+session DCX_14 in "S14" = DCX_13 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_014
+    DCX_nc_014
+    DCX_c30_038
+    DCX_nc_038
+    DCX_c30_062
+    DCX_nc_062
+    DCX_c30_086
+    DCX_nc_086
+    DCX_c30_110
+    DCX_nc_110
+    DCX_c30_134
+    DCX_nc_134
+    DCX_c30_158
+    DCX_nc_158
+    DCX_c30_182
+    DCX_nc_182
+
+session DCX_15 in "S15" = DCX_14 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_015
+    DCX_nc_015
+    DCX_c30_039
+    DCX_nc_039
+    DCX_c30_063
+    DCX_nc_063
+    DCX_c30_087
+    DCX_nc_087
+    DCX_c30_111
+    DCX_nc_111
+    DCX_c30_135
+    DCX_nc_135
+    DCX_c30_159
+    DCX_nc_159
+    DCX_c30_183
+    DCX_nc_183
+
+session DCX_16 in "S16" = DCX_15 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_016
+    DCX_nc_016
+    DCX_c30_040
+    DCX_nc_040
+    DCX_c30_064
+    DCX_nc_064
+    DCX_c30_088
+    DCX_nc_088
+    DCX_c30_112
+    DCX_nc_112
+    DCX_c30_136
+    DCX_nc_136
+    DCX_c30_160
+    DCX_nc_160
+    DCX_c30_184
+    DCX_nc_184
+
+session DCX_17 in "S17" = DCX_16 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_017
+    DCX_nc_017
+    DCX_c30_041
+    DCX_nc_041
+    DCX_c30_065
+    DCX_nc_065
+    DCX_c30_089
+    DCX_nc_089
+    DCX_c30_113
+    DCX_nc_113
+    DCX_c30_137
+    DCX_nc_137
+    DCX_c30_161
+    DCX_nc_161
+    DCX_c30_185
+    DCX_nc_185
+
+session DCX_18 in "S18" = DCX_17 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_018
+    DCX_nc_018
+    DCX_c30_042
+    DCX_nc_042
+    DCX_c30_066
+    DCX_nc_066
+    DCX_c30_090
+    DCX_nc_090
+    DCX_c30_114
+    DCX_nc_114
+    DCX_c30_138
+    DCX_nc_138
+    DCX_c30_162
+    DCX_nc_162
+    DCX_c30_186
+    DCX_nc_186
+
+session DCX_19 in "S19" = DCX_18 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_019
+    DCX_nc_019
+    DCX_c30_043
+    DCX_nc_043
+    DCX_c30_067
+    DCX_nc_067
+    DCX_c30_091
+    DCX_nc_091
+    DCX_c30_115
+    DCX_nc_115
+    DCX_c30_139
+    DCX_nc_139
+    DCX_c30_163
+    DCX_nc_163
+    DCX_c30_187
+    DCX_nc_187
+
+session DCX_20 in "S20" = DCX_19 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_020
+    DCX_nc_020
+    DCX_c30_044
+    DCX_nc_044
+    DCX_c30_068
+    DCX_nc_068
+    DCX_c30_092
+    DCX_nc_092
+    DCX_c30_116
+    DCX_nc_116
+    DCX_c30_140
+    DCX_nc_140
+    DCX_c30_164
+    DCX_nc_164
+    DCX_c30_188
+    DCX_nc_188
+
+session DCX_21 in "S21" = DCX_20 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_021
+    DCX_nc_021
+    DCX_c30_045
+    DCX_nc_045
+    DCX_c30_069
+    DCX_nc_069
+    DCX_c30_093
+    DCX_nc_093
+    DCX_c30_117
+    DCX_nc_117
+    DCX_c30_141
+    DCX_nc_141
+    DCX_c30_165
+    DCX_nc_165
+    DCX_c30_189
+    DCX_nc_189
+
+session DCX_22 in "S22" = DCX_21 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_022
+    DCX_nc_022
+    DCX_c30_046
+    DCX_nc_046
+    DCX_c30_070
+    DCX_nc_070
+    DCX_c30_094
+    DCX_nc_094
+    DCX_c30_118
+    DCX_nc_118
+    DCX_c30_142
+    DCX_nc_142
+    DCX_c30_166
+    DCX_nc_166
+    DCX_c30_190
+    DCX_nc_190
+
+session DCX_23 in "S23" = DCX_22 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    DCX_c30_023
+    DCX_nc_023
+    DCX_c30_047
+    DCX_nc_047
+    DCX_c30_071
+    DCX_nc_071
+    DCX_c30_095
+    DCX_nc_095
+    DCX_c30_119
+    DCX_nc_119
+    DCX_c30_143
+    DCX_nc_143
+    DCX_c30_167
+    DCX_nc_167
+    DCX_c30_191
+    DCX_nc_191
+
+session DCX_Final in "Final" = DCX_23 +
+  options [timeout = 0]
+  sessions DC_Tables
+  theories
+    Double_Cross_Final

@@ -1,0 +1,536 @@
+session OC_Tables in "Tables" = DC_Tables +
+  options [timeout = 0]
+  theories
+    Octagon_Symmetry
+    OC_Tables
+    OC_Split
+
+session OCX_0 in "S0" = OC_Tables +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_000
+    OCX_nc_000
+    OCX_c30_024
+    OCX_nc_024
+    OCX_c30_048
+    OCX_nc_048
+    OCX_c30_072
+    OCX_nc_072
+    OCX_c30_096
+    OCX_nc_096
+    OCX_c30_120
+    OCX_nc_120
+    OCX_c30_144
+    OCX_nc_144
+    OCX_c30_168
+    OCX_nc_168
+    OCX_c30_192
+    OCX_nc_192
+
+session OCX_1 in "S1" = OCX_0 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_001
+    OCX_nc_001
+    OCX_c30_025
+    OCX_nc_025
+    OCX_c30_049
+    OCX_nc_049
+    OCX_c30_073
+    OCX_nc_073
+    OCX_c30_097
+    OCX_nc_097
+    OCX_c30_121
+    OCX_nc_121
+    OCX_c30_145
+    OCX_nc_145
+    OCX_c30_169
+    OCX_nc_169
+    OCX_c30_193
+    OCX_nc_193
+
+session OCX_2 in "S2" = OCX_1 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_002
+    OCX_nc_002
+    OCX_c30_026
+    OCX_nc_026
+    OCX_c30_050
+    OCX_nc_050
+    OCX_c30_074
+    OCX_nc_074
+    OCX_c30_098
+    OCX_nc_098
+    OCX_c30_122
+    OCX_nc_122
+    OCX_c30_146
+    OCX_nc_146
+    OCX_c30_170
+    OCX_nc_170
+    OCX_c30_194
+    OCX_nc_194
+
+session OCX_3 in "S3" = OCX_2 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_003
+    OCX_nc_003
+    OCX_c30_027
+    OCX_nc_027
+    OCX_c30_051
+    OCX_nc_051
+    OCX_c30_075
+    OCX_nc_075
+    OCX_c30_099
+    OCX_nc_099
+    OCX_c30_123
+    OCX_nc_123
+    OCX_c30_147
+    OCX_nc_147
+    OCX_c30_171
+    OCX_nc_171
+    OCX_c30_195
+    OCX_nc_195
+
+session OCX_4 in "S4" = OCX_3 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_004
+    OCX_nc_004
+    OCX_c30_028
+    OCX_nc_028
+    OCX_c30_052
+    OCX_nc_052
+    OCX_c30_076
+    OCX_nc_076
+    OCX_c30_100
+    OCX_nc_100
+    OCX_c30_124
+    OCX_nc_124
+    OCX_c30_148
+    OCX_nc_148
+    OCX_c30_172
+    OCX_nc_172
+    OCX_c30_196
+    OCX_nc_196
+
+session OCX_5 in "S5" = OCX_4 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_005
+    OCX_nc_005
+    OCX_c30_029
+    OCX_nc_029
+    OCX_c30_053
+    OCX_nc_053
+    OCX_c30_077
+    OCX_nc_077
+    OCX_c30_101
+    OCX_nc_101
+    OCX_c30_125
+    OCX_nc_125
+    OCX_c30_149
+    OCX_nc_149
+    OCX_c30_173
+    OCX_nc_173
+    OCX_c30_197
+    OCX_nc_197
+
+session OCX_6 in "S6" = OCX_5 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_006
+    OCX_nc_006
+    OCX_c30_030
+    OCX_nc_030
+    OCX_c30_054
+    OCX_nc_054
+    OCX_c30_078
+    OCX_nc_078
+    OCX_c30_102
+    OCX_nc_102
+    OCX_c30_126
+    OCX_nc_126
+    OCX_c30_150
+    OCX_nc_150
+    OCX_c30_174
+    OCX_nc_174
+    OCX_c30_198
+    OCX_nc_198
+
+session OCX_7 in "S7" = OCX_6 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_007
+    OCX_nc_007
+    OCX_c30_031
+    OCX_nc_031
+    OCX_c30_055
+    OCX_nc_055
+    OCX_c30_079
+    OCX_nc_079
+    OCX_c30_103
+    OCX_nc_103
+    OCX_c30_127
+    OCX_nc_127
+    OCX_c30_151
+    OCX_nc_151
+    OCX_c30_175
+    OCX_nc_175
+    OCX_c30_199
+    OCX_nc_199
+
+session OCX_8 in "S8" = OCX_7 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_008
+    OCX_nc_008
+    OCX_c30_032
+    OCX_nc_032
+    OCX_c30_056
+    OCX_nc_056
+    OCX_c30_080
+    OCX_nc_080
+    OCX_c30_104
+    OCX_nc_104
+    OCX_c30_128
+    OCX_nc_128
+    OCX_c30_152
+    OCX_nc_152
+    OCX_c30_176
+    OCX_nc_176
+    OCX_c30_200
+    OCX_nc_200
+
+session OCX_9 in "S9" = OCX_8 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_009
+    OCX_nc_009
+    OCX_c30_033
+    OCX_nc_033
+    OCX_c30_057
+    OCX_nc_057
+    OCX_c30_081
+    OCX_nc_081
+    OCX_c30_105
+    OCX_nc_105
+    OCX_c30_129
+    OCX_nc_129
+    OCX_c30_153
+    OCX_nc_153
+    OCX_c30_177
+    OCX_nc_177
+    OCX_c30_201
+    OCX_nc_201
+
+session OCX_10 in "S10" = OCX_9 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_010
+    OCX_nc_010
+    OCX_c30_034
+    OCX_nc_034
+    OCX_c30_058
+    OCX_nc_058
+    OCX_c30_082
+    OCX_nc_082
+    OCX_c30_106
+    OCX_nc_106
+    OCX_c30_130
+    OCX_nc_130
+    OCX_c30_154
+    OCX_nc_154
+    OCX_c30_178
+    OCX_nc_178
+
+session OCX_11 in "S11" = OCX_10 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_011
+    OCX_nc_011
+    OCX_c30_035
+    OCX_nc_035
+    OCX_c30_059
+    OCX_nc_059
+    OCX_c30_083
+    OCX_nc_083
+    OCX_c30_107
+    OCX_nc_107
+    OCX_c30_131
+    OCX_nc_131
+    OCX_c30_155
+    OCX_nc_155
+    OCX_c30_179
+    OCX_nc_179
+
+session OCX_12 in "S12" = OCX_11 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_012
+    OCX_nc_012
+    OCX_c30_036
+    OCX_nc_036
+    OCX_c30_060
+    OCX_nc_060
+    OCX_c30_084
+    OCX_nc_084
+    OCX_c30_108
+    OCX_nc_108
+    OCX_c30_132
+    OCX_nc_132
+    OCX_c30_156
+    OCX_nc_156
+    OCX_c30_180
+    OCX_nc_180
+
+session OCX_13 in "S13" = OCX_12 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_013
+    OCX_nc_013
+    OCX_c30_037
+    OCX_nc_037
+    OCX_c30_061
+    OCX_nc_061
+    OCX_c30_085
+    OCX_nc_085
+    OCX_c30_109
+    OCX_nc_109
+    OCX_c30_133
+    OCX_nc_133
+    OCX_c30_157
+    OCX_nc_157
+    OCX_c30_181
+    OCX_nc_181
+
+session OCX_14 in "S14" = OCX_13 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_014
+    OCX_nc_014
+    OCX_c30_038
+    OCX_nc_038
+    OCX_c30_062
+    OCX_nc_062
+    OCX_c30_086
+    OCX_nc_086
+    OCX_c30_110
+    OCX_nc_110
+    OCX_c30_134
+    OCX_nc_134
+    OCX_c30_158
+    OCX_nc_158
+    OCX_c30_182
+    OCX_nc_182
+
+session OCX_15 in "S15" = OCX_14 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_015
+    OCX_nc_015
+    OCX_c30_039
+    OCX_nc_039
+    OCX_c30_063
+    OCX_nc_063
+    OCX_c30_087
+    OCX_nc_087
+    OCX_c30_111
+    OCX_nc_111
+    OCX_c30_135
+    OCX_nc_135
+    OCX_c30_159
+    OCX_nc_159
+    OCX_c30_183
+    OCX_nc_183
+
+session OCX_16 in "S16" = OCX_15 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_016
+    OCX_nc_016
+    OCX_c30_040
+    OCX_nc_040
+    OCX_c30_064
+    OCX_nc_064
+    OCX_c30_088
+    OCX_nc_088
+    OCX_c30_112
+    OCX_nc_112
+    OCX_c30_136
+    OCX_nc_136
+    OCX_c30_160
+    OCX_nc_160
+    OCX_c30_184
+    OCX_nc_184
+
+session OCX_17 in "S17" = OCX_16 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_017
+    OCX_nc_017
+    OCX_c30_041
+    OCX_nc_041
+    OCX_c30_065
+    OCX_nc_065
+    OCX_c30_089
+    OCX_nc_089
+    OCX_c30_113
+    OCX_nc_113
+    OCX_c30_137
+    OCX_nc_137
+    OCX_c30_161
+    OCX_nc_161
+    OCX_c30_185
+    OCX_nc_185
+
+session OCX_18 in "S18" = OCX_17 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_018
+    OCX_nc_018
+    OCX_c30_042
+    OCX_nc_042
+    OCX_c30_066
+    OCX_nc_066
+    OCX_c30_090
+    OCX_nc_090
+    OCX_c30_114
+    OCX_nc_114
+    OCX_c30_138
+    OCX_nc_138
+    OCX_c30_162
+    OCX_nc_162
+    OCX_c30_186
+    OCX_nc_186
+
+session OCX_19 in "S19" = OCX_18 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_019
+    OCX_nc_019
+    OCX_c30_043
+    OCX_nc_043
+    OCX_c30_067
+    OCX_nc_067
+    OCX_c30_091
+    OCX_nc_091
+    OCX_c30_115
+    OCX_nc_115
+    OCX_c30_139
+    OCX_nc_139
+    OCX_c30_163
+    OCX_nc_163
+    OCX_c30_187
+    OCX_nc_187
+
+session OCX_20 in "S20" = OCX_19 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_020
+    OCX_nc_020
+    OCX_c30_044
+    OCX_nc_044
+    OCX_c30_068
+    OCX_nc_068
+    OCX_c30_092
+    OCX_nc_092
+    OCX_c30_116
+    OCX_nc_116
+    OCX_c30_140
+    OCX_nc_140
+    OCX_c30_164
+    OCX_nc_164
+    OCX_c30_188
+    OCX_nc_188
+
+session OCX_21 in "S21" = OCX_20 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_021
+    OCX_nc_021
+    OCX_c30_045
+    OCX_nc_045
+    OCX_c30_069
+    OCX_nc_069
+    OCX_c30_093
+    OCX_nc_093
+    OCX_c30_117
+    OCX_nc_117
+    OCX_c30_141
+    OCX_nc_141
+    OCX_c30_165
+    OCX_nc_165
+    OCX_c30_189
+    OCX_nc_189
+
+session OCX_22 in "S22" = OCX_21 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_022
+    OCX_nc_022
+    OCX_c30_046
+    OCX_nc_046
+    OCX_c30_070
+    OCX_nc_070
+    OCX_c30_094
+    OCX_nc_094
+    OCX_c30_118
+    OCX_nc_118
+    OCX_c30_142
+    OCX_nc_142
+    OCX_c30_166
+    OCX_nc_166
+    OCX_c30_190
+    OCX_nc_190
+
+session OCX_23 in "S23" = OCX_22 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    OCX_c30_023
+    OCX_nc_023
+    OCX_c30_047
+    OCX_nc_047
+    OCX_c30_071
+    OCX_nc_071
+    OCX_c30_095
+    OCX_nc_095
+    OCX_c30_119
+    OCX_nc_119
+    OCX_c30_143
+    OCX_nc_143
+    OCX_c30_167
+    OCX_nc_167
+    OCX_c30_191
+    OCX_nc_191
+
+session OCX_Final in "Final" = OCX_23 +
+  options [timeout = 0]
+  sessions OC_Tables
+  theories
+    Octagon_Final

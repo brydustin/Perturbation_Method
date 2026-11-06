@@ -1,0 +1,2 @@
+definition double_cross_pos :: "(float \<times> float) list" where
+  "double_cross_pos = [(Float 0 0, Float 0 0), (Float (-3041648138404103) (-56), Float 0 0), (Float 3041648138404103 (-56), Float 0 0), (Float 0 0, Float 3041648138404103 (-56)), (Float 0 0, Float (-3041648138404103) (-56)), (Float 5645503481367791 (-57), Float 5645503481367791 (-57)), (Float (-5645503481367791) (-57), Float 5645503481367791 (-57)), (Float (-5645503481367791) (-57), Float (-5645503481367791) (-57)), (Float 5645503481367791 (-57), Float (-5645503481367791) (-57))]"

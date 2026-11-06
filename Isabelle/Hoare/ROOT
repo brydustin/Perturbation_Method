@@ -1,0 +1,18 @@
+session Perturbative_UTP_Base in "UTP/Base" = Perturbative_Termination +
+  description "The ITree/UTP verification framework on top of the perturbative-method theories"
+  sessions ITree_VCG
+  theories "ITree_VCG.ITree_VCG"
+
+session Perturbative_UTP in "UTP" = Perturbative_UTP_Base +
+  description "The perturbative method as an ITree/UTP program with a total-correctness triple"
+  theories Perturbative_Scans Perturbative_UTP
+
+session Double_Cross_UTP in "UTP/Double_Cross" = DCX_Final +
+  description "The ITree/UTP triple for the double cross"
+  sessions Perturbative_UTP
+  theories Double_Cross_UTP
+
+session Octagon_UTP in "UTP/Octagon" = OCX_Final +
+  description "The ITree/UTP triple for the octagon"
+  sessions Perturbative_UTP
+  theories Octagon_UTP

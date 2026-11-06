@@ -1,0 +1,85 @@
+text \<open>Sectors \<open>k < 16\<close> of width \<open>2\<^sup>-\<^sup>8\<close> (part 1) and pieces \<open>256 \<le> j < 3232\<close> of width \<open>2\<^sup>-\<^sup>1\<^sup>2\<close> cover \<open>[0, \<pi>/4]\<close>.\<close>
+
+lemma dc_split_terminates:
+  assumes bd: "band_in bd band"
+    and old: "\<And>k. k < 16 \<Longrightarrow> check_sector 53 dc_q 9 inv9_ivl band 20 (Float 1 (-26)) 100 (Float (int k) (-8)) (Float (int k + 1) (-8))"
+    and new: "\<And>k. 16 \<le> k \<Longrightarrow> k < 202 \<Longrightarrow> \<forall>j\<in>{16 * k..<16 * k + 16}. dc_sub band j"
+    and tr: "tie_rule tm ts"
+  shows "stops_within dcp 9 bd tm ts t 20"
+proof -
+  have base: "dc_stops bd t 20" if t: "0 \<le> t" "t \<le> pi/4" for t
+    unfolding dc_stops_def
+  proof (intro allI impI)
+    fix tm ts assume tr: "tie_rule tm ts"
+    show "stops_within dcp 9 bd tm ts t 20"
+    proof (cases "t \<le> 1/16")
+      case True
+      have h8: "real_of_float (Float 1 (-8)) = 1/256" by (simp add: powr_minus_divide)
+      have h: "0 < real_of_float (Float 1 (-8))" by simp
+      have le: "t \<le> real 16 * real_of_float (Float 1 (-8))" using True by (simp add: h8)
+      obtain k
+        where k: "k < 16" "real k * real_of_float (Float 1 (-8)) \<le> t" "t \<le> (real k + 1) * real_of_float (Float 1 (-8))"
+        using sectors_cover [OF t(1) le h] by (metis zero_less_numeral)
+      have lo: "real_of_float (Float (int k) (-8)) \<le> t" using k(2) unfolding Float_nat_e .
+      have hi: "t \<le> real_of_float (Float (int k + 1) (-8))" using k(3) by (simp add: ring_distribs)
+      show ?thesis by (rule check_sector_sound [OF inv9_in bd tr old [OF k(1)] lo hi])
+    next
+      case False
+      have h12: "real_of_float (Float 1 (-12)) = 1/4096" by (simp add: powr_minus_divide)
+      have h: "0 < real_of_float (Float 1 (-12))" by simp
+      have "pi \<le> 3.1416" using pi_approx by simp
+      then have le: "t \<le> real 3232 * real_of_float (Float 1 (-12))" using t(2) by (simp add: h12)
+      obtain j
+        where j: "j < 3232" "real j * real_of_float (Float 1 (-12)) \<le> t" "t \<le> (real j + 1) * real_of_float (Float 1 (-12))"
+        using sectors_cover [OF t(1) le h] by (metis zero_less_numeral)
+      have "1/16 < (real j + 1) / 4096" using False j(3) by (simp add: h12)
+      then have j256: "256 \<le> j" by simp
+      define k where "k = j div 16"
+      have dm: "j div 16 * 16 + j mod 16 = j" "j mod 16 < 16" by simp_all
+      have k16: "16 \<le> k" "k < 202" unfolding k_def using j256 j(1) dm by linarith+
+      have jk: "j \<in> {16 * k..<16 * k + 16}" unfolding k_def atLeastLessThan_iff using dm by linarith
+      have "dc_sub band j" using new [OF k16] jk by blast
+      then have chk: "check_sector 53 dc_q 9 inv9_ivl band 20 (Float 1 (-26)) 100 (Float (int j) (-12)) (Float (int j + 1) (-12))"
+        unfolding dc_sub_def .
+      have lo: "real_of_float (Float (int j) (-12)) \<le> t" using j(2) unfolding Float_nat_e .
+      have hi: "t \<le> real_of_float (Float (int j + 1) (-12))" using j(3) by (simp add: ring_distribs)
+      show ?thesis by (rule check_sector_sound [OF inv9_in bd tr chk lo hi])
+    qed
+  qed
+  have "dc_stops bd t 20" by (rule dc_stops_all) (rule base)
+  then show ?thesis unfolding dc_stops_def using tr by blast
+qed
+
+text \<open>The same with pieces \<open>j < 3232\<close> of width \<open>2\<^sup>-\<^sup>1\<^sup>2\<close> only.\<close>
+
+lemma dc_pieces_terminates:
+  assumes bd: "band_in bd band"
+    and new: "\<And>k. k < 202 \<Longrightarrow> \<forall>j\<in>{16 * k..<16 * k + 16}. dc_sub band j"
+    and tr: "tie_rule tm ts"
+  shows "stops_within dcp 9 bd tm ts t 20"
+proof -
+  have base: "dc_stops bd t 20" if t: "0 \<le> t" "t \<le> pi/4" for t
+    unfolding dc_stops_def
+  proof (intro allI impI)
+    fix tm ts assume tr: "tie_rule tm ts"
+    have h12: "real_of_float (Float 1 (-12)) = 1/4096" by (simp add: powr_minus_divide)
+    have h: "0 < real_of_float (Float 1 (-12))" by simp
+    have "pi \<le> 3.1416" using pi_approx by simp
+    then have le: "t \<le> real 3232 * real_of_float (Float 1 (-12))" using t(2) by (simp add: h12)
+    obtain j
+      where j: "j < 3232" "real j * real_of_float (Float 1 (-12)) \<le> t" "t \<le> (real j + 1) * real_of_float (Float 1 (-12))"
+      using sectors_cover [OF t(1) le h] by (metis zero_less_numeral)
+    define k where "k = j div 16"
+    have dm: "j div 16 * 16 + j mod 16 = j" "j mod 16 < 16" by simp_all
+    have k202: "k < 202" unfolding k_def using j(1) dm by linarith
+    have jk: "j \<in> {16 * k..<16 * k + 16}" unfolding k_def atLeastLessThan_iff using dm by linarith
+    have "dc_sub band j" using new [OF k202] jk by blast
+    then have chk: "check_sector 53 dc_q 9 inv9_ivl band 20 (Float 1 (-26)) 100 (Float (int j) (-12)) (Float (int j + 1) (-12))"
+      unfolding dc_sub_def .
+    have lo: "real_of_float (Float (int j) (-12)) \<le> t" using j(2) unfolding Float_nat_e .
+    have hi: "t \<le> real_of_float (Float (int j + 1) (-12))" using j(3) by (simp add: ring_distribs)
+    show "stops_within dcp 9 bd tm ts t 20" by (rule check_sector_sound [OF inv9_in bd tr chk lo hi])
+  qed
+  have "dc_stops bd t 20" by (rule dc_stops_all) (rule base)
+  then show ?thesis unfolding dc_stops_def using tr by blast
+qed

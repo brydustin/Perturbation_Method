@@ -1,0 +1,33 @@
+text \<open>Pieces \<open>j < 3232\<close> of width \<open>2\<^sup>-\<^sup>1\<^sup>2\<close> cover \<open>[0, \<pi>/4]\<close>.\<close>
+
+lemma oc_pieces_terminates:
+  assumes bd: "band_in bd band"
+    and new: "\<And>k. k < 202 \<Longrightarrow> \<forall>j\<in>{16 * k..<16 * k + 16}. oc_sub band j"
+    and tr: "tie_rule tm ts"
+  shows "stops_within ocp 9 bd tm ts t @D@"
+proof -
+  have base: "oc_stops bd t @D@" if t: "0 \<le> t" "t \<le> pi/4" for t
+    unfolding oc_stops_def
+  proof (intro allI impI)
+    fix tm ts assume tr: "tie_rule tm ts"
+    have h12: "real_of_float (Float 1 (-12)) = 1/4096" by (simp add: powr_minus_divide)
+    have h: "0 < real_of_float (Float 1 (-12))" by simp
+    have "pi \<le> 3.1416" using pi_approx by simp
+    then have le: "t \<le> real 3232 * real_of_float (Float 1 (-12))" using t(2) by (simp add: h12)
+    obtain j
+      where j: "j < 3232" "real j * real_of_float (Float 1 (-12)) \<le> t" "t \<le> (real j + 1) * real_of_float (Float 1 (-12))"
+      using sectors_cover_oc [OF t(1) le h] by (metis zero_less_numeral)
+    define k where "k = j div 16"
+    have dm: "j div 16 * 16 + j mod 16 = j" "j mod 16 < 16" by simp_all
+    have k202: "k < 202" unfolding k_def using j(1) dm by linarith
+    have jk: "j \<in> {16 * k..<16 * k + 16}" unfolding k_def atLeastLessThan_iff using dm by linarith
+    have "oc_sub band j" using new [OF k202] jk by blast
+    then have chk: "check_sector 53 ocd_q 9 inv9_ivl band @D@ (Float 1 (-26)) 100 (Float (int j) (-12)) (Float (int j + 1) (-12))"
+      unfolding oc_sub_def .
+    have lo: "real_of_float (Float (int j) (-12)) \<le> t" using j(2) unfolding Float_nat_e_oc .
+    have hi: "t \<le> real_of_float (Float (int j + 1) (-12))" using j(3) by (simp add: ring_distribs)
+    show "stops_within ocp 9 bd tm ts t @D@" by (rule check_sector_sound [OF inv9_in bd tr chk lo hi])
+  qed
+  have "oc_stops bd t @D@" by (rule oc_stops_all) (rule base)
+  then show ?thesis unfolding oc_stops_def using tr by blast
+qed

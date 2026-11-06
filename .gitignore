@@ -1,0 +1,22 @@
+# Track only the Isabelle formalisation and the paper.
+/*
+!/.gitignore
+!/Isabelle/
+!/Paper_Termination/
+
+# Run logs, scratch and throwaway sessions
+/Isabelle/logs/
+/Isabelle/Pieces_GMock/
+/Isabelle/GPilot/
+/Isabelle/.chk_*
+__pycache__/
+
+# LaTeX build files and backups
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+/Paper_Termination/paper_before_*.tex

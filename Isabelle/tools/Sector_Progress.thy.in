@@ -1,0 +1,40 @@
+theory Sector_Progress
+  imports Main
+begin
+
+text \<open>\<open>progress_eval x\<close> is \<open>eval\<close> that appends timestamped lines to the progress log.
+  Isar applies a terminal method three times; the first two fail at once, the third evaluates.
+  So \<open>started\<close> is logged once, \<open>failed\<close> only after at least a second of evaluation.\<close>
+
+ML \<open>
+val progress_seen = Synchronized.var "progress_seen" (Symtab.empty: unit Symtab.table)
+fun progress_write line =
+  File.append (Path.explode "@LOG@")
+    (Date.fmt "%Y-%m-%d %H:%M:%S" (Date.fromTimeLocal (Time.now ())) ^ "  " ^ line ^ "\n")
+fun progress_once name =
+  if Synchronized.change_result progress_seen (fn tab =>
+       if Symtab.defined tab name then (false, tab) else (true, Symtab.update (name, ()) tab))
+  then progress_write ("started  " ^ name) else ()
+\<close>
+
+method_setup progress_eval = \<open>Scan.lift Parse.name >> (fn name => fn ctxt =>
+  let
+    fun eval_tac i =
+      CONVERSION (Conv.params_conv ~1 (Conv.concl_conv ~1 o Code_Runtime.dynamic_holds_conv) ctxt) i
+      THEN resolve_tac ctxt [TrueI] i
+    fun secs t = Real.fmt (StringCvt.FIX (SOME 0)) (Time.toReal (#elapsed (Timing.result t)))
+  in
+    SIMPLE_METHOD' (fn i => fn st => Seq.make (fn () =>
+      let
+        val _ = progress_once name
+        val t = Timing.start ()
+      in
+        case Seq.pull (eval_tac i st) of
+          NONE =>
+            (if Time.toReal (#elapsed (Timing.result t)) >= 1.0
+             then progress_write ("FAILED   " ^ name ^ " after " ^ secs t ^ " s") else (); NONE)
+        | SOME (st', _) => (progress_write ("finished " ^ name ^ " in " ^ secs t ^ " s"); SOME (st', Seq.empty))
+      end))
+  end)\<close> "eval with progress logging"
+
+end

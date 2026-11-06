@@ -1,0 +1,30 @@
+session Perturbative_Base in Base = "HOL-Analysis" +
+  description "Base image: HOL-Analysis plus verified float-interval arithmetic"
+  sessions "HOL-Library" "HOL-Decision_Procs"
+  theories
+    "HOL-Library.Interval_Float"
+    "HOL-Decision_Procs.Approximation_Bounds"
+
+session Perturbative_Termination = Perturbative_Base +
+  description "Termination of the perturbative sidelobe method: the double cross stops, the circular array cannot"
+  options [timeout = 3600]
+  theories
+    Perturbative_Basics
+    Taylor_Enclosure
+    Algorithm
+    Interval_Model
+    Node_Enclosure
+    Sector_Bounds
+    Classify
+    Search
+    Exec_Node
+    Exec_Impl
+    Exec_Search
+    Double_Cross
+    Fast_Code
+    Symmetry
+    Double_Cross_Symmetry
+    Circular_Floor
+    Circular_Data
+    Circular_Check
+    Circular_Result

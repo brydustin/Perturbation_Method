@@ -1,0 +1,120 @@
+session DC_Sectors_0 in "S0" = Perturbative_Termination +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_0_00
+    DCS_0_01
+    DCS_0_02
+    DCS_0_03
+
+session DC_Sectors_1 in "S1" = DC_Sectors_0 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_1_00
+    DCS_1_01
+    DCS_1_02
+    DCS_1_03
+
+session DC_Sectors_2 in "S2" = DC_Sectors_1 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_2_00
+    DCS_2_01
+    DCS_2_02
+    DCS_2_03
+
+session DC_Sectors_3 in "S3" = DC_Sectors_2 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_3_00
+    DCS_3_01
+    DCS_3_02
+    DCS_3_03
+
+session DC_Sectors_4 in "S4" = DC_Sectors_3 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_4_00
+    DCS_4_01
+    DCS_4_02
+    DCS_4_03
+
+session DC_Sectors_5 in "S5" = DC_Sectors_4 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_5_00
+    DCS_5_01
+    DCS_5_02
+    DCS_5_03
+
+session DC_Sectors_6 in "S6" = DC_Sectors_5 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_6_00
+    DCS_6_01
+    DCS_6_02
+    DCS_6_03
+
+session DC_Sectors_7 in "S7" = DC_Sectors_6 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_7_00
+    DCS_7_01
+    DCS_7_02
+    DCS_7_03
+
+session DC_Sectors_8 in "S8" = DC_Sectors_7 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_8_00
+    DCS_8_01
+    DCS_8_02
+    DCS_8_03
+
+session DC_Sectors_9 in "S9" = DC_Sectors_8 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_9_00
+    DCS_9_01
+    DCS_9_02
+    DCS_9_03
+
+session DC_Sectors_10 in "S10" = DC_Sectors_9 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_10_00
+    DCS_10_01
+    DCS_10_02
+    DCS_10_03
+
+session DC_Sectors_11 in "S11" = DC_Sectors_10 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_11_00
+    DCS_11_01
+    DCS_11_02
+    DCS_11_03
+
+session DC_Sectors_12 in "S12" = DC_Sectors_11 +
+  options [timeout = 0]
+  sessions Perturbative_Termination
+  theories
+    DCS_12_00
+    DCS_12_01
+    DCS_12_02
+
+session DC_Final in "Final" = DC_Sectors_12 +
+  sessions Perturbative_Termination
+  theories
+    Double_Cross_Final
