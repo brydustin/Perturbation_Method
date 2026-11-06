@@ -5,7 +5,8 @@
 !/Paper_Termination/
 !/Matlab_Code/
 /Matlab_Code/*
-!/Matlab_Code/Sandbox_Methods.mlx
+!/Matlab_Code/*.m
+!/Matlab_Code/*.mlx
 
 # Run logs, scratch and throwaway sessions
 /Isabelle/logs/
