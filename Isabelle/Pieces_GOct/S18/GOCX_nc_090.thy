@@ -1,0 +1,65 @@
+theory GOCX_nc_090
+  imports "GOC_Tables.GOC_Tables"
+begin
+
+lemma goc_nc_1440: "goc_sub None 1440"
+  by (goc_eval goc_nc_1440)
+
+lemma goc_nc_1441: "goc_sub None 1441"
+  by (goc_eval goc_nc_1441)
+
+lemma goc_nc_1442: "goc_sub None 1442"
+  by (goc_eval goc_nc_1442)
+
+lemma goc_nc_1443: "goc_sub None 1443"
+  by (goc_eval goc_nc_1443)
+
+lemma goc_nc_1444: "goc_sub None 1444"
+  by (goc_eval goc_nc_1444)
+
+lemma goc_nc_1445: "goc_sub None 1445"
+  by (goc_eval goc_nc_1445)
+
+lemma goc_nc_1446: "goc_sub None 1446"
+  by (goc_eval goc_nc_1446)
+
+lemma goc_nc_1447: "goc_sub None 1447"
+  by (goc_eval goc_nc_1447)
+
+lemma goc_nc_1448: "goc_sub None 1448"
+  by (goc_eval goc_nc_1448)
+
+lemma goc_nc_1449: "goc_sub None 1449"
+  by (goc_eval goc_nc_1449)
+
+lemma goc_nc_1450: "goc_sub None 1450"
+  by (goc_eval goc_nc_1450)
+
+lemma goc_nc_1451: "goc_sub None 1451"
+  by (goc_eval goc_nc_1451)
+
+lemma goc_nc_1452: "goc_sub None 1452"
+  by (goc_eval goc_nc_1452)
+
+lemma goc_nc_1453: "goc_sub None 1453"
+  by (goc_eval goc_nc_1453)
+
+lemma goc_nc_1454: "goc_sub None 1454"
+  by (goc_eval goc_nc_1454)
+
+lemma goc_nc_1455: "goc_sub None 1455"
+  by (goc_eval goc_nc_1455)
+
+lemma gupt_nc_090: "[1440..<1456] = [1440, 1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450, 1451, 1452, 1453, 1454, 1455]"
+  by (simp add: upt_rec)
+
+lemma gsec_nc_090: "\<forall>j\<in>{16 * 90..<16 * 90 + 16}. goc_sub None j"
+proof
+  fix j :: nat assume "j \<in> {16 * 90..<16 * 90 + 16}"
+  then have "j \<in> set [1440..<1456]" unfolding set_upt by simp
+  then have "j \<in> set [1440, 1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450, 1451, 1452, 1453, 1454, 1455]" unfolding gupt_nc_090 .
+  then show "goc_sub None j" using goc_nc_1440 goc_nc_1441 goc_nc_1442 goc_nc_1443 goc_nc_1444 goc_nc_1445 goc_nc_1446 goc_nc_1447 goc_nc_1448 goc_nc_1449 goc_nc_1450 goc_nc_1451 goc_nc_1452 goc_nc_1453 goc_nc_1454 goc_nc_1455
+    by (simp only: set_simps insert_iff empty_iff) (elim disjE FalseE; hypsubst; assumption)
+qed
+
+end

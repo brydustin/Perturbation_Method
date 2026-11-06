@@ -137,4 +137,47 @@ Session Perturbative_Termination (parent HOL-Analysis). Check one theory: tools/
   general, no computation. Simulation (scratchpad cont/modified.py, DC no band, 6019 foci incl. 1518 at
   sequence changes): stops within 19, worst off-grid outside main lobe -20.195 dB, grid margin 0.19-0.34 dB.
 
+## 2026-11-05 21:56 — Sidelobe_Guarantee green (no oracles)
+New session Guarantee/ (parent Perturbative_Termination; old theories untouched). Build:
+`Isabelle2026/bin/isabelle build -b -d . -d Guarantee Sidelobe_Guarantee` (13 s). Quick check of one theory:
+`isabelle process_theories -d . -D Guarantee -l Perturbative_Termination -o parallel_proofs=0 -O THY`.
+- G_Chord: |f''| <= K => f <= max(ends) + K(b-a)^2/8 and f >= min(ends) - K(b-a)^2/8 (convexity of f - chord - parabola).
+- G_Pattern: pw = true squared pattern at every real direction; |pw''| <= Hc (reuses Taylor_Enclosure via
+  cnj patt = FF (cnj c)); lifts of grid points; corrections are orthogonal projections (nrm_corr);
+  Hc <= 2 N^2 (G + 2G^2) when nrm <= N.
+- G_Method: changed method. Peak = >= both neighbours and > one (symmetric; catches flat tops); the
+  main peak's two neighbours are excluded with it (a flat main top has two peaks); threshold
+  sqmax/100 - dl. grun, gstops_within; nrm_grun <= N.
+- G_Discrete (Fact 1): walk_to_main: at a stop every sample above the lowered threshold is joined, through
+  neighbouring samples above it, to the main peak or to a peak inside the band.
+- G_Guarantee: guarantee_at_stop / guarantee_no_band / grun_guarantee / gstops_guarantee: every direction
+  where the true pattern is > sqmax/100 is joined to the main peak (or a peak in the band) by an arc on
+  which the true pattern stays > sqmax/100 - 2 dl. Needs dl >= 2N^2(G + 2G^2) h^2/8.
+Next: termination of the changed method (new checker beside the old one; old proofs kept).
+
+## 2026-11-05 late — Guarantee_Checker (termination of the changed method), in progress
+Session GChecker/ (Guarantee_Checker = Sidelobe_Guarantee + ...), build `-d . -d Guarantee -d GChecker`.
+- GC_Classify: PPg (>= both, via upper DP/DN >= 0), PMg, run_okg/EXCg, USg, THg = lower TH - dlf (exact float),
+  gterminal, LLg (certainly eligible: CP, CO, not PMg at k, prev k, next k), gcand; gterminal_sound, gsel_cand.
+- GC_Search: gcorrs, grun_exc, gcands, gverify, gverify_sound.  GC_Exec: list versions, gverify_impl_eq,
+  gcheck_sector, gcheck_sector_sound.  GC_Symmetry: gall_rules_transport (same H1-H4 as Symmetry).
+- GC_Double_Cross: gdc_stops_all, gdc_terminates, dc_dlf = Float 23 (-10) = 23/1024, dc_gam (G = 7/2),
+  dc_dl_ok, gdc_guarantee.  GC_Octagon (copy of Octagon_Symmetry's positions/H-lemmas): oc_dlf = 9/512, G = 3.067.
+- Traps: context abbreviations leak as constants (Classify: c S; Exec_Impl: R Hb nd Xc; mine now
+  `abbreviation (input)`); a name `dl` clashed; `fix k :: nat` needed in split proofs.
+- Pieces: tools/gen_gpieces.py dc|oc OUT DMAX BANDS [mock]; templates tools/G{DC,OC}_{Tables.thy,Split_body}.in.
+  Plan: DMAX 26, no band first (clean guarantee); logs/gsector_progress.log, logs/goct_progress.log.
+- Simulation of the changed method (tools/sim/sim_changed.py, first-index rule): DC <= 19 corrections, worst true
+  pattern off the main lobe -20.197 dB; octagon <= 8, -20.169 dB.
 - Paper §3.4 numbers (original method): tools/sim/flat_tops.py dc|oct (recreated; the scratchpad copy is gone).
+- 22:48 pilot (GPilot/, 6 pieces incl. the 4 slowest old ones): all pass with DMAX 26; 539/430/370/338/325/8 s
+  vs old 713/693/572/495/453/8 s.  22:50 full run started:
+  `isabelle build -b -d . -d Guarantee -d GChecker -d Pieces_G -j 1 -o threads=10 GDCX_Final` (logs/gdc_pieces_build.log).
+- 2026-11-06 05:33 GDCX_Final GREEN: 3232/3232 pieces, 0 FAILED, 6:44:40 elapsed (piece time 211010 s, max 731 s).
+  Oracles: Code_Generator.holds, Code_Generator.holds_by_evaluation (as for the old theorems).
+  gdouble_cross_stops_no_band: changed method stops within 26, every focus, every tie rule, no band;
+  gdouble_cross_sidelobes_no_band: guarantee at the stop.  05:35 octagon run started (Pieces_GOct, DMAX 14):
+  `isabelle build -b -d . -d Guarantee -d GChecker -d Pieces_G -d Pieces_GOct -j 1 -o threads=10 GOCX_Final`.
+- 2026-11-06 08:48 GOCX_Final GREEN: 3232/3232 pieces, 0 FAILED, 3:13:52 elapsed (piece time 98755 s, max 287 s).
+  Oracles: Code_Generator.holds, Code_Generator.holds_by_evaluation.  goctagon_stops_no_band (within 14),
+  goctagon_sidelobes_no_band.  The changed method is now fully verified for both arrays without a band.

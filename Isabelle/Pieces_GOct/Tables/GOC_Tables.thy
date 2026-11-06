@@ -1,0 +1,48 @@
+theory GOC_Tables
+  imports "GDC_Tables.GDC_Tables" "Guarantee_Checker.GC_Octagon"
+begin
+
+text \<open>The octagon's checks of the changed method on pieces \<open>[j 2\<^sup>-\<^sup>1\<^sup>2, (j+1) 2\<^sup>-\<^sup>1\<^sup>2]\<close>, as in GDC_Tables
+  (whose shift-based code equations are inherited).\<close>
+
+definition goc_kl :: "civ list list" where "goc_kl = kernelL 53 ocd_q 9"
+definition goc_gl :: "float interval list" where "goc_gl = gridLst 53"
+definition goc_hb :: "float list" where "goc_hb = hbL 53 ocd_q 9 goc_kl"
+definition goc_b30 :: "float interval option" where "goc_b30 = Some (band30 53)"
+
+definition goc_sub :: "float interval option \<Rightarrow> nat \<Rightarrow> bool" where
+  "goc_sub band j = gcheck_sector 53 oc_dlf ocd_q 9 inv9_ivl band 14 (Float 1 (-26)) 100 (Float (int j) (-12)) (Float (int j + 1) (-12))"
+
+lemma goc_sub_code [code]:
+  "goc_sub band j = gverify_impl 53 oc_dlf ocd_q 9 inv9_ivl goc_kl goc_gl band 14 (Float 1 (-26)) 100
+     (Float (int j) (-12)) (Float (int j + 1) (-12)) [] goc_kl goc_hb"
+  by (simp only: goc_sub_def gcheck_sector_def goc_kl_def goc_gl_def goc_hb_def Let_def)
+
+text \<open>\<open>goc_eval x\<close> proves \<open>goc_sub b j\<close> with the compiled checker and logs start and end of \<open>x\<close>.\<close>
+ML \<open>
+val goc_check = @{computation_check terms: Trueprop goc_sub goc_b30 "None :: float interval option"
+  "0 :: nat" "1 :: nat" "2 :: nat" "3 :: nat" Suc}
+val goc_progress_seen = Synchronized.var "goc_progress_seen" (Symtab.empty: unit Symtab.table)
+fun goc_progress_write line =
+  File.append (Path.explode "/home/dusty/Desktop/Matlab_UH_Project/Proof/Isabelle/logs/goct_progress.log")
+    (Date.fmt "%Y-%m-%d %H:%M:%S" (Date.fromTimeLocal (Time.now ())) ^ "  " ^ line ^ "\n")
+fun goc_progress_once name =
+  if Synchronized.change_result goc_progress_seen (fn tab =>
+       if Symtab.defined tab name then (false, tab) else (true, Symtab.update (name, ()) tab))
+  then goc_progress_write ("started  " ^ name) else ()
+\<close>
+method_setup goc_eval = \<open>Scan.lift Parse.name >> (fn name => fn ctxt =>
+  let
+    fun tac i = CONVERSION (goc_check ctxt) i THEN resolve_tac ctxt [TrueI] i
+    fun secs t = Real.fmt (StringCvt.FIX (SOME 0)) (Time.toReal (#elapsed (Timing.result t)))
+  in
+    SIMPLE_METHOD' (fn i => fn st => Seq.make (fn () =>
+      let val _ = goc_progress_once name; val t = Timing.start ()
+      in case Seq.pull (tac i st) of
+           NONE => (if Time.toReal (#elapsed (Timing.result t)) >= 1.0
+                    then goc_progress_write ("FAILED   " ^ name ^ " after " ^ secs t ^ " s") else (); NONE)
+         | SOME (st', _) => (goc_progress_write ("finished " ^ name ^ " in " ^ secs t ^ " s"); SOME (st', Seq.empty))
+      end))
+  end)\<close> "compiled sector check of the changed method with progress logging"
+
+end

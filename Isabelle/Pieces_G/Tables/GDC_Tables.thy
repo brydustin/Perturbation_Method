@@ -1,0 +1,107 @@
+theory GDC_Tables
+  imports "Guarantee_Checker.GC_Double_Cross" "Perturbative_Termination.Fast_Code"
+begin
+
+text \<open>Sector checks on pieces \<open>[j 2\<^sup>-\<^sup>1\<^sup>2, (j+1) 2\<^sup>-\<^sup>1\<^sup>2]\<close>. The kernel and bound tables depend only on
+  the array, so the checker is compiled once and computes them once.\<close>
+
+text \<open>Shift-based code equations, provably equal to the library's: it rounds by dividing by 2 one bit
+  at a time and aligns exponents by multiplying \<open>2\<^sup>k\<close> out k times.\<close>
+declare [[code drop: div_twopow mod_twopow bitlen]]
+
+lemma div_twopow_shift [code]: "div_twopow x n = drop_bit n x"
+  by (simp add: drop_bit_eq_div)
+
+lemma mod_twopow_shift [code]: "mod_twopow x n = take_bit n x"
+  by (simp add: take_bit_eq_mod)
+
+lemma bitlen_shift [code]:
+  "bitlen x = (if 4294967296 \<le> x then bitlen (drop_bit 32 x) + 32
+     else if 256 \<le> x then bitlen (drop_bit 8 x) + 8
+     else if 0 < x then bitlen (drop_bit 1 x) + 1 else 0)"
+proof -
+  have a: "bitlen x = bitlen (drop_bit 32 x) + 32" if "4294967296 \<le> x"
+    using bitlen_div_pow [of 32 x] that by (simp add: drop_bit_eq_div)
+  have b: "bitlen x = bitlen (drop_bit 8 x) + 8" if "256 \<le> x"
+    using bitlen_div_pow [of 8 x] that by (simp add: drop_bit_eq_div)
+  have c: "bitlen x = bitlen (drop_bit 1 x) + 1" if "0 < x"
+    using compute_bitlen [of x] that by (simp add: drop_bit_eq_div)
+  have d: "bitlen x = 0" if "\<not> 0 < x"
+    using compute_bitlen [of x] that by simp
+  show ?thesis using a b c d by auto
+qed
+
+lemma plus_float_shift [code]:
+  "Float m1 e1 + Float m2 e2 =
+    (if m1 = 0 then Float m2 e2
+     else if m2 = 0 then Float m1 e1
+     else if e1 \<le> e2 then Float (m1 + push_bit (nat (e2 - e1)) m2) e1
+     else Float (m2 + push_bit (nat (e1 - e2)) m1) e2)"
+  unfolding push_bit_eq_mult by (rule Float.compute_float_plus)
+
+lemma float_le_shift [code]:
+  "Float m1 e1 \<le> Float m2 e2 \<longleftrightarrow>
+     (if e1 \<le> e2 then m1 \<le> push_bit (nat (e2 - e1)) m2 else push_bit (nat (e1 - e2)) m1 \<le> m2)"
+  unfolding push_bit_eq_mult by (rule float_le_fast)
+
+lemma float_less_shift [code]:
+  "Float m1 e1 < Float m2 e2 \<longleftrightarrow>
+     (if e1 \<le> e2 then m1 < push_bit (nat (e2 - e1)) m2 else push_bit (nat (e1 - e2)) m1 < m2)"
+  unfolding push_bit_eq_mult by (rule float_less_fast)
+
+lemma float_plus_down_shift [code]:
+  fixes p :: nat and m1 e1 m2 e2 :: int
+  shows "float_plus_down p (Float m1 e1) (Float m2 e2) =
+    (if m1 = 0 then float_round_down p (Float m2 e2)
+    else if m2 = 0 then float_round_down p (Float m1 e1)
+    else
+      (if e1 \<ge> e2 then
+        (let k1 = Suc p - nat (bitlen \<bar>m1\<bar>) in
+          if bitlen \<bar>m2\<bar> > e1 - e2 - k1 - 2
+          then float_round_down p ((Float m1 e1) + (Float m2 e2))
+          else float_round_down p (Float (push_bit (Suc (Suc k1)) m1 + sgn m2) (e1 - int k1 - 2)))
+    else float_plus_down p (Float m2 e2) (Float m1 e1)))"
+  unfolding push_bit_eq_mult by (rule Float.compute_float_plus_down)
+
+definition gdc_kl :: "civ list list" where "gdc_kl = kernelL 53 dc_q 9"
+definition gdc_gl :: "float interval list" where "gdc_gl = gridLst 53"
+definition gdc_hb :: "float list" where "gdc_hb = hbL 53 dc_q 9 gdc_kl"
+definition gdc_b30 :: "float interval option" where "gdc_b30 = Some (band30 53)"
+
+text \<open>The changed method on the piece \<open>[j 2\<^sup>-\<^sup>1\<^sup>2, (j+1) 2\<^sup>-\<^sup>1\<^sup>2]\<close>, depth cap 26.\<close>
+definition gdc_sub :: "float interval option \<Rightarrow> nat \<Rightarrow> bool" where
+  "gdc_sub band j = gcheck_sector 53 dc_dlf dc_q 9 inv9_ivl band 26 (Float 1 (-26)) 100 (Float (int j) (-12)) (Float (int j + 1) (-12))"
+
+lemma gdc_sub_code [code]:
+  "gdc_sub band j = gverify_impl 53 dc_dlf dc_q 9 inv9_ivl gdc_kl gdc_gl band 26 (Float 1 (-26)) 100
+     (Float (int j) (-12)) (Float (int j + 1) (-12)) [] gdc_kl gdc_hb"
+  by (simp only: gdc_sub_def gcheck_sector_def gdc_kl_def gdc_gl_def gdc_hb_def Let_def)
+
+text \<open>\<open>gdc_eval x\<close> proves \<open>gdc_sub b j\<close> with the compiled checker and logs start and end of \<open>x\<close>.\<close>
+ML \<open>
+val gdc_check = @{computation_check terms: Trueprop gdc_sub gdc_b30 "None :: float interval option"
+  "0 :: nat" "1 :: nat" "2 :: nat" "3 :: nat" Suc}
+val progress_seen = Synchronized.var "progress_seen" (Symtab.empty: unit Symtab.table)
+fun progress_write line =
+  File.append (Path.explode "/home/dusty/Desktop/Matlab_UH_Project/Proof/Isabelle/logs/gsector_progress.log")
+    (Date.fmt "%Y-%m-%d %H:%M:%S" (Date.fromTimeLocal (Time.now ())) ^ "  " ^ line ^ "\n")
+fun progress_once name =
+  if Synchronized.change_result progress_seen (fn tab =>
+       if Symtab.defined tab name then (false, tab) else (true, Symtab.update (name, ()) tab))
+  then progress_write ("started  " ^ name) else ()
+\<close>
+method_setup gdc_eval = \<open>Scan.lift Parse.name >> (fn name => fn ctxt =>
+  let
+    fun tac i = CONVERSION (gdc_check ctxt) i THEN resolve_tac ctxt [TrueI] i
+    fun secs t = Real.fmt (StringCvt.FIX (SOME 0)) (Time.toReal (#elapsed (Timing.result t)))
+  in
+    SIMPLE_METHOD' (fn i => fn st => Seq.make (fn () =>
+      let val _ = progress_once name; val t = Timing.start ()
+      in case Seq.pull (tac i st) of
+           NONE => (if Time.toReal (#elapsed (Timing.result t)) >= 1.0
+                    then progress_write ("FAILED   " ^ name ^ " after " ^ secs t ^ " s") else (); NONE)
+         | SOME (st', _) => (progress_write ("finished " ^ name ^ " in " ^ secs t ^ " s"); SOME (st', Seq.empty))
+      end))
+  end)\<close> "compiled sector check of the changed method with progress logging"
+
+end

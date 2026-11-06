@@ -1,0 +1,29 @@
+theory GDC_Split
+  imports GDC_Tables
+begin
+
+text \<open>Pieces \<open>j < 3232\<close> of width \<open>2\<^sup>-\<^sup>1\<^sup>2\<close> cover \<open>[0, \<pi>/4]\<close>.\<close>
+
+lemma gdc_pieces_terminates:
+  assumes bd: "band_in bd band"
+    and new: "\<And>k. k < 202 \<Longrightarrow> \<forall>j\<in>{16 * k..<16 * k + 16}. gdc_sub band j"
+    and tr: "tie_rule tm ts"
+  shows "gstops_within dcp 9 (real_of_float dc_dlf) bd tm ts t 26"
+proof (rule gdc_terminates [where n = 3232 and e = "-12" and prec = 53 and Dmax = 26
+         and wmin = "Float 1 (-26)" and f = 100, OF bd _ _ _ tr])
+  show "0 < (3232::nat)" by simp
+  have "pi \<le> 3.1416" using pi_approx by simp
+  moreover have "real_of_float (Float (int 3232) (-12)) = 3232 / 4096" by (simp add: powr_minus_divide)
+  ultimately show "pi / 4 \<le> real_of_float (Float (int 3232) (-12))" by simp
+next
+  fix k :: nat assume k: "k < 3232"
+  define kk where "kk = k div 16"
+  have dm: "k div 16 * 16 + k mod 16 = k" "k mod 16 < 16" by simp_all
+  have kk202: "kk < 202" unfolding kk_def using k dm by linarith
+  have kin: "k \<in> {16 * kk..<16 * kk + 16}" unfolding kk_def atLeastLessThan_iff using dm by linarith
+  have "gdc_sub band k" using new [OF kk202] kin by blast
+  then show "gcheck_sector 53 dc_dlf dc_q 9 inv9_ivl band 26 (Float 1 (-26)) 100 (Float (int k) (-12)) (Float (int k + 1) (-12))"
+    unfolding gdc_sub_def .
+qed
+
+end

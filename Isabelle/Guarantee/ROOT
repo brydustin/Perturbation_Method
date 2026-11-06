@@ -1,0 +1,6 @@
+session Sidelobe_Guarantee = Perturbative_Termination +
+  description "The changed method (flat tops count as peaks, threshold lowered by a margin):
+    at a stop the true pattern is below -20 dB off the main lobe, between grid points too"
+  options [timeout = 1800]
+  theories
+    G_Guarantee

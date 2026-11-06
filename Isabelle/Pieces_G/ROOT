@@ -1,0 +1,333 @@
+session GDC_Tables in "Tables" = Guarantee_Checker +
+  options [timeout = 0]
+  theories
+    GDC_Tables
+    GDC_Split
+
+session GDCX_0 in "S0" = GDC_Tables +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_000
+    GDCX_nc_024
+    GDCX_nc_048
+    GDCX_nc_072
+    GDCX_nc_096
+    GDCX_nc_120
+    GDCX_nc_144
+    GDCX_nc_168
+    GDCX_nc_192
+
+session GDCX_1 in "S1" = GDCX_0 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_001
+    GDCX_nc_025
+    GDCX_nc_049
+    GDCX_nc_073
+    GDCX_nc_097
+    GDCX_nc_121
+    GDCX_nc_145
+    GDCX_nc_169
+    GDCX_nc_193
+
+session GDCX_2 in "S2" = GDCX_1 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_002
+    GDCX_nc_026
+    GDCX_nc_050
+    GDCX_nc_074
+    GDCX_nc_098
+    GDCX_nc_122
+    GDCX_nc_146
+    GDCX_nc_170
+    GDCX_nc_194
+
+session GDCX_3 in "S3" = GDCX_2 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_003
+    GDCX_nc_027
+    GDCX_nc_051
+    GDCX_nc_075
+    GDCX_nc_099
+    GDCX_nc_123
+    GDCX_nc_147
+    GDCX_nc_171
+    GDCX_nc_195
+
+session GDCX_4 in "S4" = GDCX_3 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_004
+    GDCX_nc_028
+    GDCX_nc_052
+    GDCX_nc_076
+    GDCX_nc_100
+    GDCX_nc_124
+    GDCX_nc_148
+    GDCX_nc_172
+    GDCX_nc_196
+
+session GDCX_5 in "S5" = GDCX_4 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_005
+    GDCX_nc_029
+    GDCX_nc_053
+    GDCX_nc_077
+    GDCX_nc_101
+    GDCX_nc_125
+    GDCX_nc_149
+    GDCX_nc_173
+    GDCX_nc_197
+
+session GDCX_6 in "S6" = GDCX_5 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_006
+    GDCX_nc_030
+    GDCX_nc_054
+    GDCX_nc_078
+    GDCX_nc_102
+    GDCX_nc_126
+    GDCX_nc_150
+    GDCX_nc_174
+    GDCX_nc_198
+
+session GDCX_7 in "S7" = GDCX_6 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_007
+    GDCX_nc_031
+    GDCX_nc_055
+    GDCX_nc_079
+    GDCX_nc_103
+    GDCX_nc_127
+    GDCX_nc_151
+    GDCX_nc_175
+    GDCX_nc_199
+
+session GDCX_8 in "S8" = GDCX_7 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_008
+    GDCX_nc_032
+    GDCX_nc_056
+    GDCX_nc_080
+    GDCX_nc_104
+    GDCX_nc_128
+    GDCX_nc_152
+    GDCX_nc_176
+    GDCX_nc_200
+
+session GDCX_9 in "S9" = GDCX_8 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_009
+    GDCX_nc_033
+    GDCX_nc_057
+    GDCX_nc_081
+    GDCX_nc_105
+    GDCX_nc_129
+    GDCX_nc_153
+    GDCX_nc_177
+    GDCX_nc_201
+
+session GDCX_10 in "S10" = GDCX_9 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_010
+    GDCX_nc_034
+    GDCX_nc_058
+    GDCX_nc_082
+    GDCX_nc_106
+    GDCX_nc_130
+    GDCX_nc_154
+    GDCX_nc_178
+
+session GDCX_11 in "S11" = GDCX_10 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_011
+    GDCX_nc_035
+    GDCX_nc_059
+    GDCX_nc_083
+    GDCX_nc_107
+    GDCX_nc_131
+    GDCX_nc_155
+    GDCX_nc_179
+
+session GDCX_12 in "S12" = GDCX_11 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_012
+    GDCX_nc_036
+    GDCX_nc_060
+    GDCX_nc_084
+    GDCX_nc_108
+    GDCX_nc_132
+    GDCX_nc_156
+    GDCX_nc_180
+
+session GDCX_13 in "S13" = GDCX_12 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_013
+    GDCX_nc_037
+    GDCX_nc_061
+    GDCX_nc_085
+    GDCX_nc_109
+    GDCX_nc_133
+    GDCX_nc_157
+    GDCX_nc_181
+
+session GDCX_14 in "S14" = GDCX_13 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_014
+    GDCX_nc_038
+    GDCX_nc_062
+    GDCX_nc_086
+    GDCX_nc_110
+    GDCX_nc_134
+    GDCX_nc_158
+    GDCX_nc_182
+
+session GDCX_15 in "S15" = GDCX_14 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_015
+    GDCX_nc_039
+    GDCX_nc_063
+    GDCX_nc_087
+    GDCX_nc_111
+    GDCX_nc_135
+    GDCX_nc_159
+    GDCX_nc_183
+
+session GDCX_16 in "S16" = GDCX_15 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_016
+    GDCX_nc_040
+    GDCX_nc_064
+    GDCX_nc_088
+    GDCX_nc_112
+    GDCX_nc_136
+    GDCX_nc_160
+    GDCX_nc_184
+
+session GDCX_17 in "S17" = GDCX_16 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_017
+    GDCX_nc_041
+    GDCX_nc_065
+    GDCX_nc_089
+    GDCX_nc_113
+    GDCX_nc_137
+    GDCX_nc_161
+    GDCX_nc_185
+
+session GDCX_18 in "S18" = GDCX_17 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_018
+    GDCX_nc_042
+    GDCX_nc_066
+    GDCX_nc_090
+    GDCX_nc_114
+    GDCX_nc_138
+    GDCX_nc_162
+    GDCX_nc_186
+
+session GDCX_19 in "S19" = GDCX_18 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_019
+    GDCX_nc_043
+    GDCX_nc_067
+    GDCX_nc_091
+    GDCX_nc_115
+    GDCX_nc_139
+    GDCX_nc_163
+    GDCX_nc_187
+
+session GDCX_20 in "S20" = GDCX_19 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_020
+    GDCX_nc_044
+    GDCX_nc_068
+    GDCX_nc_092
+    GDCX_nc_116
+    GDCX_nc_140
+    GDCX_nc_164
+    GDCX_nc_188
+
+session GDCX_21 in "S21" = GDCX_20 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_021
+    GDCX_nc_045
+    GDCX_nc_069
+    GDCX_nc_093
+    GDCX_nc_117
+    GDCX_nc_141
+    GDCX_nc_165
+    GDCX_nc_189
+
+session GDCX_22 in "S22" = GDCX_21 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_022
+    GDCX_nc_046
+    GDCX_nc_070
+    GDCX_nc_094
+    GDCX_nc_118
+    GDCX_nc_142
+    GDCX_nc_166
+    GDCX_nc_190
+
+session GDCX_23 in "S23" = GDCX_22 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDCX_nc_023
+    GDCX_nc_047
+    GDCX_nc_071
+    GDCX_nc_095
+    GDCX_nc_119
+    GDCX_nc_143
+    GDCX_nc_167
+    GDCX_nc_191
+
+session GDCX_Final in "Final" = GDCX_23 +
+  options [timeout = 0]
+  sessions GDC_Tables
+  theories
+    GDouble_Cross_Final

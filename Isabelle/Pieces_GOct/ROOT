@@ -1,0 +1,333 @@
+session GOC_Tables in "Tables" = GDC_Tables +
+  options [timeout = 0]
+  theories
+    GOC_Tables
+    GOC_Split
+
+session GOCX_0 in "S0" = GOC_Tables +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_000
+    GOCX_nc_024
+    GOCX_nc_048
+    GOCX_nc_072
+    GOCX_nc_096
+    GOCX_nc_120
+    GOCX_nc_144
+    GOCX_nc_168
+    GOCX_nc_192
+
+session GOCX_1 in "S1" = GOCX_0 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_001
+    GOCX_nc_025
+    GOCX_nc_049
+    GOCX_nc_073
+    GOCX_nc_097
+    GOCX_nc_121
+    GOCX_nc_145
+    GOCX_nc_169
+    GOCX_nc_193
+
+session GOCX_2 in "S2" = GOCX_1 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_002
+    GOCX_nc_026
+    GOCX_nc_050
+    GOCX_nc_074
+    GOCX_nc_098
+    GOCX_nc_122
+    GOCX_nc_146
+    GOCX_nc_170
+    GOCX_nc_194
+
+session GOCX_3 in "S3" = GOCX_2 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_003
+    GOCX_nc_027
+    GOCX_nc_051
+    GOCX_nc_075
+    GOCX_nc_099
+    GOCX_nc_123
+    GOCX_nc_147
+    GOCX_nc_171
+    GOCX_nc_195
+
+session GOCX_4 in "S4" = GOCX_3 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_004
+    GOCX_nc_028
+    GOCX_nc_052
+    GOCX_nc_076
+    GOCX_nc_100
+    GOCX_nc_124
+    GOCX_nc_148
+    GOCX_nc_172
+    GOCX_nc_196
+
+session GOCX_5 in "S5" = GOCX_4 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_005
+    GOCX_nc_029
+    GOCX_nc_053
+    GOCX_nc_077
+    GOCX_nc_101
+    GOCX_nc_125
+    GOCX_nc_149
+    GOCX_nc_173
+    GOCX_nc_197
+
+session GOCX_6 in "S6" = GOCX_5 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_006
+    GOCX_nc_030
+    GOCX_nc_054
+    GOCX_nc_078
+    GOCX_nc_102
+    GOCX_nc_126
+    GOCX_nc_150
+    GOCX_nc_174
+    GOCX_nc_198
+
+session GOCX_7 in "S7" = GOCX_6 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_007
+    GOCX_nc_031
+    GOCX_nc_055
+    GOCX_nc_079
+    GOCX_nc_103
+    GOCX_nc_127
+    GOCX_nc_151
+    GOCX_nc_175
+    GOCX_nc_199
+
+session GOCX_8 in "S8" = GOCX_7 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_008
+    GOCX_nc_032
+    GOCX_nc_056
+    GOCX_nc_080
+    GOCX_nc_104
+    GOCX_nc_128
+    GOCX_nc_152
+    GOCX_nc_176
+    GOCX_nc_200
+
+session GOCX_9 in "S9" = GOCX_8 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_009
+    GOCX_nc_033
+    GOCX_nc_057
+    GOCX_nc_081
+    GOCX_nc_105
+    GOCX_nc_129
+    GOCX_nc_153
+    GOCX_nc_177
+    GOCX_nc_201
+
+session GOCX_10 in "S10" = GOCX_9 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_010
+    GOCX_nc_034
+    GOCX_nc_058
+    GOCX_nc_082
+    GOCX_nc_106
+    GOCX_nc_130
+    GOCX_nc_154
+    GOCX_nc_178
+
+session GOCX_11 in "S11" = GOCX_10 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_011
+    GOCX_nc_035
+    GOCX_nc_059
+    GOCX_nc_083
+    GOCX_nc_107
+    GOCX_nc_131
+    GOCX_nc_155
+    GOCX_nc_179
+
+session GOCX_12 in "S12" = GOCX_11 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_012
+    GOCX_nc_036
+    GOCX_nc_060
+    GOCX_nc_084
+    GOCX_nc_108
+    GOCX_nc_132
+    GOCX_nc_156
+    GOCX_nc_180
+
+session GOCX_13 in "S13" = GOCX_12 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_013
+    GOCX_nc_037
+    GOCX_nc_061
+    GOCX_nc_085
+    GOCX_nc_109
+    GOCX_nc_133
+    GOCX_nc_157
+    GOCX_nc_181
+
+session GOCX_14 in "S14" = GOCX_13 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_014
+    GOCX_nc_038
+    GOCX_nc_062
+    GOCX_nc_086
+    GOCX_nc_110
+    GOCX_nc_134
+    GOCX_nc_158
+    GOCX_nc_182
+
+session GOCX_15 in "S15" = GOCX_14 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_015
+    GOCX_nc_039
+    GOCX_nc_063
+    GOCX_nc_087
+    GOCX_nc_111
+    GOCX_nc_135
+    GOCX_nc_159
+    GOCX_nc_183
+
+session GOCX_16 in "S16" = GOCX_15 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_016
+    GOCX_nc_040
+    GOCX_nc_064
+    GOCX_nc_088
+    GOCX_nc_112
+    GOCX_nc_136
+    GOCX_nc_160
+    GOCX_nc_184
+
+session GOCX_17 in "S17" = GOCX_16 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_017
+    GOCX_nc_041
+    GOCX_nc_065
+    GOCX_nc_089
+    GOCX_nc_113
+    GOCX_nc_137
+    GOCX_nc_161
+    GOCX_nc_185
+
+session GOCX_18 in "S18" = GOCX_17 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_018
+    GOCX_nc_042
+    GOCX_nc_066
+    GOCX_nc_090
+    GOCX_nc_114
+    GOCX_nc_138
+    GOCX_nc_162
+    GOCX_nc_186
+
+session GOCX_19 in "S19" = GOCX_18 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_019
+    GOCX_nc_043
+    GOCX_nc_067
+    GOCX_nc_091
+    GOCX_nc_115
+    GOCX_nc_139
+    GOCX_nc_163
+    GOCX_nc_187
+
+session GOCX_20 in "S20" = GOCX_19 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_020
+    GOCX_nc_044
+    GOCX_nc_068
+    GOCX_nc_092
+    GOCX_nc_116
+    GOCX_nc_140
+    GOCX_nc_164
+    GOCX_nc_188
+
+session GOCX_21 in "S21" = GOCX_20 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_021
+    GOCX_nc_045
+    GOCX_nc_069
+    GOCX_nc_093
+    GOCX_nc_117
+    GOCX_nc_141
+    GOCX_nc_165
+    GOCX_nc_189
+
+session GOCX_22 in "S22" = GOCX_21 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_022
+    GOCX_nc_046
+    GOCX_nc_070
+    GOCX_nc_094
+    GOCX_nc_118
+    GOCX_nc_142
+    GOCX_nc_166
+    GOCX_nc_190
+
+session GOCX_23 in "S23" = GOCX_22 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOCX_nc_023
+    GOCX_nc_047
+    GOCX_nc_071
+    GOCX_nc_095
+    GOCX_nc_119
+    GOCX_nc_143
+    GOCX_nc_167
+    GOCX_nc_191
+
+session GOCX_Final in "Final" = GOCX_23 +
+  options [timeout = 0]
+  sessions GOC_Tables
+  theories
+    GOctagon_Final

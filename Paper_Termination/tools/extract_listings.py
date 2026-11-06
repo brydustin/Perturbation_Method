@@ -78,6 +78,23 @@ S = {
  "oc_pos": ("Pieces_Oct/Tables/Octagon_Symmetry.thy", r"^definition octagon_d4_pos", "full", None),
  "utp_oc": ("Hoare/UTP/Octagon/Octagon_UTP.thy", r"^theorem octagon_band30", "full", None),
  "utp_below": ("Hoare/UTP/Perturbative_Scans.thy", r"^definition below", "full", r"^lemma finite_below"),
+ "g_method": ("Guarantee/G_Method.thy", r"^definition is_fpeak", "full", r"^definition gstops_within"),
+ "g_chord": ("Guarantee/G_Chord.thy", r"^theorem chord_max", "stmt", None),
+ "g_pw": ("Guarantee/G_Pattern.thy", r"^definition pw", "full", None),
+ "g_cell": ("Guarantee/G_Pattern.thy", r"^theorem pw_cell_max", "stmt", None),
+ "g_nrm": ("Guarantee/G_Pattern.thy", r"^lemma nrm_corr", "stmt", None),
+ "g_hc": ("Guarantee/G_Pattern.thy", r"^theorem Hc_le_norm", "stmt", None),
+ "g_walk": ("Guarantee/G_Discrete.thy", r"^theorem walk_to_main", "stmt", None),
+ "g_guarantee": ("Guarantee/G_Guarantee.thy", r"^theorem guarantee_at_stop", "stmt", None),
+ "g_no_band": ("Guarantee/G_Guarantee.thy", r"^corollary guarantee_no_band", "stmt", None),
+ "g_run": ("Guarantee/G_Guarantee.thy", r"^theorem gstops_guarantee", "stmt", None),
+ "gc_classify": ("GChecker/GC_Classify.thy", r"^definition PPg", "full", r"^lemma PPg_lt"),
+ "gc_check": ("GChecker/GC_Exec.thy", r"^theorem gcheck_sector_sound", "stmt", None),
+ "gc_transport": ("GChecker/GC_Symmetry.thy", r"^theorem gall_rules_transport", "stmt", None),
+ "gdc_gam": ("GChecker/GC_Double_Cross.thy", r"^lemma dc_gam", "stmt", None),
+ "gdc_dl": ("GChecker/GC_Double_Cross.thy", r"^lemma dc_dl_ok", "stmt", None),
+ "gdc_final": ("Pieces_G/Final/GDouble_Cross_Final.thy", r"^theorem gdouble_cross_stops_no_band", "full", r"^ML"),
+ "goc_final": ("Pieces_GOct/Final/GOctagon_Final.thy", r"^theorem goctagon_stops_no_band", "full", r"^theorem goctagon_sidelobes_no_band"),
 }
 syms = set()
 for name, (path, start, mode, until) in S.items():

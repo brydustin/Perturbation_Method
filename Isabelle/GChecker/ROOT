@@ -1,0 +1,8 @@
+session Guarantee_Checker = Sidelobe_Guarantee +
+  description "The interval checker for the changed method, proved sound"
+  options [timeout = 3600]
+  theories
+    GC_Exec
+    GC_Symmetry
+    GC_Double_Cross
+    GC_Octagon

@@ -72,7 +72,10 @@ arrays, a ``double cross'' and a regular octagon, the method stops after at most
 corrections, for every focus angle and every rule for breaking ties, with a $30^\circ$ guard band or
 without one.  Stopping does not mean that every sidelobe is below $-20$~dB: the test sees only the
 sampled pattern, and in simulation, at isolated focus angles, the method stops with a sidelobe of up
-to $-5.2$~dB that the test misses.  For a 32-element
+to $-5.2$~dB that the test misses.  We therefore change the test in two places (a flat top counts
+as a peak, and the threshold is lowered by a margin that covers the curvature of the pattern) and
+prove that the changed method stops on both arrays and that, when it stops, the true pattern is at or
+below $-20$~dB at every real direction outside the main lobe, between grid points too.  For a 32-element
 circular array of radius four wavelengths the stopping condition cannot be met at all for
 $20^\circ$ and $30^\circ$ bands.  We also prove a total-correctness Hoare triple for the method
 written as a program.  All results are proved in Isabelle/HOL.  The termination proof follows the
@@ -122,13 +125,19 @@ runs forever on this array.
 total-correctness Hoare triple: it halts, and on halting every strict peak of the sampled pattern outside
 the band, other than the main lobe, is at or below $-20$~dB.  The number of corrections is bounded by any bound $D$ for which the run is known to
 stop; for the double cross $D = 20$, and for the octagon $D = 10$.
+\item \textbf{\Cref{thm:guarantee,thm:gstops}.}  With two small changes to the test (a flat top
+counts as a peak, and the threshold is lowered by a margin), the method stops on both arrays without a
+band, within 26 and 14 corrections, and at the stop the true pattern is at or below $-20$~dB at every
+real direction outside the main lobe, not only at the samples.
 \end{itemize}
 
 \paragraph{What stopping means.}  The theorems hold for every real focus angle, but the test looks
 only at the 1000 samples, and there only at strict peaks.  So they say nothing about the pattern
 between samples.  In simulation (\cref{sec:unseen}) the stopped pattern is above $-20$~dB at isolated
 focus angles: when the top of a sidelobe falls on two samples of equal value, the test does not see
-that sidelobe at all.
+that sidelobe at all.  \Cref{sec:changed} changes the test so that the stop does guarantee the level,
+at every real direction outside the main lobe (\cref{thm:guarantee}), and proves that the changed
+method stops on both arrays (\cref{thm:gstops}).
 
 \begin{table}[t]
 \centering
@@ -238,7 +247,7 @@ orthogonal projection of $w$ onto the hyperplane $\{v : F_v(\varphi_s) = 0\}$.  
 smallest change of the weights that puts a null at $\varphi_s$, as in the classical null synthesis of
 Steyskal~\cite{Steyskal1982}, and
 $\|C_s(w)\|^2 = \|w\|^2 - |F_w(\varphi_s)|^2/N$: corrections never increase the norm of the weights.
-This remark is not used in the proofs.
+This is used, in the form $\|C_s(w)\| \le \|w\|$, only in \cref{sec:changed}.
 \end{remark}
 
 The next lemma is the key to everything that follows: the effect of any fixed sequence of
@@ -428,7 +437,7 @@ above $-20$~dB.  For the double cross we found 8 such stops, with an excess of a
 for the octagon we found none.
 
 None of this affects \cref{thm:dc,thm:oct}, which are about stopping.  It limits what the stop
-means.
+means.  \Cref{sec:changed} removes both gaps by changing the test.
 
 \subsection{Exact and floating-point arithmetic}\label{sec:fp}
 
@@ -752,6 +761,187 @@ The theorem is a statement about all weights, not only about those the method re
 static obstruction.  For a $45^\circ$ band the corresponding linear program gives a floor of about
 $-20.6$~dB, below the threshold, so this argument says nothing for that band.
 
+\section{A test that guarantees the sidelobe level}\label{sec:changed}
+
+\Cref{sec:unseen} showed that the implemented test can stop with a sidelobe above $-20$~dB, in two
+ways: at a flat top, and between grid points.  We change the test in two places and prove that the
+change closes both gaps.  Whenever the changed method stops, the true pattern is at or below
+$-20$~dB at every real direction outside the main lobe.  We then prove that the changed method stops
+on both nine-element arrays.  Everything in this section is in two new Isabelle sessions,
+\thy{Sidelobe\_Guarantee} and \thy{Guarantee\_Checker}; the definitions and theorems of the previous
+sections are unchanged.
+
+\subsection{The changed test}
+
+\begin{definition}[the changed test]\label{def:changed}
+Fix a margin $\delta > 0$.
+\begin{itemize}
+\item A grid index $m$ is a \emph{peak} if $P_w(m) \ge P_w(m-1)$, $P_w(m) \ge P_w(m+1)$, and
+$P_w(m) > P_w(m-1)$ or $P_w(m) > P_w(m+1)$.
+\item The main lobe $m_0(w)$ is the peak nearest the focus, chosen by the tie rule $\tau_m$.
+\item The eligible set is the set of peaks $m \notin \{m_0 - 1, m_0, m_0 + 1\}$ outside the band with
+$P_w(m) > \max_q P_w(q)/100 - \delta$.
+\end{itemize}
+The loop, the corrections and the selection are those of \cref{alg:method}.
+\end{definition}
+
+Every strict peak is a peak, and a flat top of two samples has two peaks, its two ends.  This is why
+the neighbours of the main lobe are excluded with it: when the top of the main lobe is flat over two
+samples, both are peaks, and the second one must not be corrected.  For the double cross we take
+$\delta = 23/1024$ and for the octagon $\delta = 9/512$, in units in which $|F_w|^2 \le N^2 = 81$; for the
+double cross, in our simulations, this lowers the threshold at the stop by about $0.2$ to $0.35$~dB.  \Cref{lst:gmethod} gives
+the formal definitions; \thy{grun} is the run of the changed method.
+
+\lstinputlisting[caption={The changed test (\thy{G\_Method.thy}).}, label=lst:gmethod]{listings/g_method.thy}
+
+\subsection{Every stretch above the threshold has a peak}
+
+\begin{lemma}\label{lem:walk}
+Let $c'$ be a threshold, and suppose that the changed test, with threshold $c'$ and no band, finds
+nothing eligible.  Then every grid index $m$ with $P_w(m) > c'$ is joined to $m_0$ by a chain of
+neighbouring indices on all of which $P_w > c'$.
+\end{lemma}
+
+\begin{proof}
+Let $C$ be the set of indices reachable from $m$ through neighbours above $c'$, let
+$\mu = \max_C P_w$, and let $Z$ be the set of $q \in C$ with $P_w(q) = \mu$.  If $Z$ is closed under
+$q \mapsto q + 1$, then $Z$ is the whole circle and $m_0 \in C$.  Otherwise take $q \in Z$ with
+$q + 1 \notin Z$.  Then $P_w(q+1) < \mu$: either $q + 1 \in C$ with a smaller value, or $q + 1$ is
+outside $C$, hence at most $c' < \mu$.  In the same way $P_w(q-1) \le \mu$.  So $q$ is a peak above
+the threshold, and since nothing is eligible, $q \in \{m_0 - 1, m_0, m_0 + 1\}$.  If $q = m_0 \pm 1$,
+then $q$ and $m_0$ are neighbouring peaks, so each is at least as high as the other,
+$P_w(m_0) = P_w(q) > c'$, and $m_0 \in C$.
+\end{proof}
+
+For strict peaks the lemma is false, and the counterexamples are exactly the flat tops of
+\cref{sec:unseen}: a stretch whose largest value sits on two adjacent samples can contain no strict
+peak.  In Isabelle the band is allowed (\cref{lst:gwalk}): the chain then ends at $m_0$ or at a peak
+inside the band (the set \thy{X}).
+
+\lstinputlisting[caption={\Cref{lem:walk} (\thy{G\_Discrete.thy}).  \thy{above} is the set of indices above
+\thy{th}, \thy{step} the relation between neighbours in it.}, label=lst:gwalk]{listings/g_walk.thy}
+
+\subsection{Between two samples}
+
+\begin{lemma}[chord bound]\label{lem:chord}
+Let $f \colon \R \to \R$ be twice differentiable with $|f''| \le K$.  Then for $a \le x \le b$,
+\[ \min(f(a), f(b)) - K(b-a)^2/8 \;\le\; f(x) \;\le\; \max(f(a), f(b)) + K(b-a)^2/8 . \]
+\end{lemma}
+
+\begin{proof}
+Let $\ell$ be the chord of $f$ on $[a, b]$ and $r(t) = f(t) - \ell(t) - \frac K2 (t-a)(b-t)$.  Then
+$r'' = f'' + K \ge 0$, so $r$ is convex, and $r(a) = r(b) = 0$, so $r \le 0$ on $[a, b]$.  The chord lies
+between $f(a)$ and $f(b)$, and $(x-a)(b-x) \le (b-a)^2/4$.  The lower bound follows for $-f$.
+\end{proof}
+
+\lstinputlisting[caption={\Cref{lem:chord} (\thy{G\_Chord.thy}); \thy{chord\_min} is the lower bound.}]{listings/g_chord.thy}
+
+\begin{lemma}[curvature of the pattern]\label{lem:curv}
+For all weights $w$ and every real $\varphi$, $|\frac{d^2}{d\varphi^2}|F_w(\varphi)|^2| \le H(w)$, with
+$H(w) = 2(D^2 + BE)$, $B = \sum_j |w_j|$, $D = \sum_j |w_j|\, k r_j$, $E = \sum_j |w_j|(k r_j + k^2 r_j^2)$
+and $r_j = |p_j|$.  If $\|w\|^2 \le N$ and $k r_j \le G$ for all $j$, then $H(w) \le 2N^2(G + 2G^2)$.
+\end{lemma}
+
+\begin{proof}
+The conjugate pattern $\overline{F_w(\varphi)} = \sum_j \bar w_j\, e^{-\mathrm{i} k (x_j \cos\varphi + y_j \sin\varphi)}$
+has the form of the pattern as a function of the focus in \cref{sec:enclosures}, with the excitation
+$\bar w$; so the bound is the one of \cref{lem:taylor}.  For the second claim, $B \le \sqrt N\, \|w\| \le N$
+by the Cauchy--Schwarz inequality, $D \le BG$ and $E \le B(G + G^2)$.
+\end{proof}
+
+Along a run $\|w\|^2 \le N$: the initial weights have $\|\ab(t)\|^2 = N$, and corrections never increase
+the norm (\cref{rem:projection}; \thy{nrm\_corr}).  So a fixed margin covers every step of every run:
+with $h = 2\pi/M$ it suffices that $\delta \ge 2N^2(G + 2G^2)\, h^2/8$.  For the double cross $G = 7/2$
+gives $0.02239 \le 23/1024$, and for the octagon $G = 3.067$ gives $0.01749 \le 9/512$.
+
+\lstinputlisting[caption={The true pattern \thy{pw} at every real direction, \cref{lem:chord} for it, the
+projection, and the bound of \cref{lem:curv} (\thy{G\_Pattern.thy}).}]{listings/g_pw.thy}
+\lstinputlisting{listings/g_cell.thy}
+\lstinputlisting{listings/g_nrm.thy}
+\lstinputlisting{listings/g_hc.thy}
+
+\subsection{The guarantee}
+
+\begin{theorem}[the changed test guarantees the level]\label{thm:guarantee}
+Suppose that the changed test with no band finds nothing eligible for the weights $w$, and that
+$\delta \ge H(w)\, h^2/8$.  Let $c = \max_q P_w(q)/100$.  Then every real direction $\varphi$ with
+$|F_w(\varphi)|^2 > c$ is joined to the main peak $\varphi_{m_0}$ (modulo $2\pi$) by an arc on which
+$|F_w|^2 > c - 2\delta$.
+\end{theorem}
+
+In words: measure the main lobe down to the level $c - 2\delta$, that is, take the arc around the main
+peak on which the true pattern stays above $c - 2\delta$.  Outside that arc the true pattern is at or
+below $c$, which is $-20$~dB relative to the largest sample, and so also relative to the true maximum.
+Nothing is assumed about where the directions lie relative to the grid.
+
+\begin{proof}
+Let $c' = c - \delta$, the threshold of the test.  The direction $\varphi$ lies in a grid cell
+$[\varphi_m, \varphi_m + h]$ (after a shift by a multiple of $2\pi$).  By the upper bound of
+\cref{lem:chord}, $|F_w(\varphi)|^2 \le \max(P_w(m), P_w(m+1)) + \delta$, so one end of the cell is
+above $c'$.  From that end, \cref{lem:walk} gives a chain of neighbouring samples above $c'$ that ends
+at $m_0$.  On each cell of the chain both ends are above $c'$, so by the lower bound of
+\cref{lem:chord} the true pattern is above $c' - \delta = c - 2\delta$ on the whole cell; the same holds
+on the part of the first cell between $\varphi$ and its end.  These cells form an arc from $\varphi$ to
+$\varphi_{m_0}$.
+\end{proof}
+
+The slack $2\delta$ only concerns where the main lobe ends; outside the main lobe the bound $c$ has no
+slack.  The slack cannot be removed by any test that looks only at samples: whether a valley between
+two samples dips below $c$ cannot be decided from the samples.  It shrinks like $h^2$, that is, like
+$1/M^2$.  The Isabelle theorem (\cref{lst:gguar}) also allows the band; the arc then ends at the main
+peak or at a grid direction inside the band.  \Cref{lst:grun} combines it with the norm bound for runs
+of the changed method.
+
+\lstinputlisting[caption={\Cref{thm:guarantee} (\thy{G\_Guarantee.thy}).  \thy{lift q y} says that $y$ is
+$\varphi_q$ plus a multiple of $2\pi$; \thy{hM} is $h$.}, label=lst:gguar]{listings/g_guarantee.thy}
+\lstinputlisting{listings/g_no_band.thy}
+\lstinputlisting[caption={The guarantee at the stop of a run of the changed method.}, label=lst:grun]{listings/g_run.thy}
+
+\subsection{The changed method stops}
+
+\begin{theorem}[the changed method stops]\label{thm:gstops}
+With no band, for every real focus angle and every tie rule, the changed method stops within 26
+corrections on the double cross ($\delta = 23/1024$) and within 14 corrections on the octagon
+($\delta = 9/512$).  At the stop the conclusion of \cref{thm:guarantee} holds.
+\end{theorem}
+
+The proof is that of \cref{thm:dc} with three changes to the classification of \cref{sec:classify}.  An
+index is a possible peak if both neighbour differences can be $\ge 0$ (instead of $> 0$); a certainly
+eligible peak must not be a neighbour of a possible main lobe; and the lower bound of the threshold is
+lowered by $\delta$, which is exact because floats subtract exactly.  The soundness theorem has the same
+form as \cref{prop:sound} (\cref{lst:gcheck}).  The symmetry argument of \cref{sec:symmetry} carries over
+with the same hypotheses: the changed peak rule is symmetric in the two neighbours, and the excluded set
+$\{m_0 - 1, m_0, m_0 + 1\}$ is mapped onto itself.  The computation again checks the 3{,}232 intervals of
+width $2^{-12}$ that cover $[0, \pi/4]$.  In a simulation with the first-index tie rule the changed method
+used at most 19 corrections on the double cross and 8 on the octagon, and the true pattern outside the
+main lobe was at most $-20.20$ and $-20.17$~dB.  \Cref{tab:gcomputation} gives the size of the
+computation.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+ & double cross & octagon\\
+\midrule
+intervals, no band ($[j\,2^{-12}, (j+1)\,2^{-12}]$) & 3{,}232 & 3{,}232\\
+margin $\delta$ & $23/1024$ & $9/512$\\
+depth bound $D_{\max}$ & 26 & 14\\
+smallest width still split, $w_{\min}$ & $2^{-26}$ rad & $2^{-26}$ rad\\
+wall time in Isabelle2026, 10 threads & 6~h~45~min & 3~h~14~min\\
+generated piece theories & 13{,}300 lines & 13{,}200 lines\\
+\bottomrule
+\end{tabular}
+\caption{The computations behind \cref{thm:gstops}.  \Cref{thm:guarantee} and its lemmas take about
+800 lines of theory text (\thy{Sidelobe\_Guarantee}), and the changed checker with its soundness
+proof, the symmetry argument and the two instances about 1{,}350 (\thy{Guarantee\_Checker}).}
+\label{tab:gcomputation}
+\end{table}
+
+\lstinputlisting[caption={The changed classification (\thy{GC\_Classify.thy}).}]{listings/gc_classify.thy}
+\lstinputlisting[caption={Soundness of the changed checker (\thy{GC\_Exec.thy}).}, label=lst:gcheck]{listings/gc_check.thy}
+\lstinputlisting[caption={\Cref{thm:gstops} for the double cross (generated theory \thy{GDouble\_Cross\_Final.thy}).}, label=lst:gdc]{listings/gdc_final.thy}
+\lstinputlisting[caption={\Cref{thm:gstops} for the octagon (\thy{GOctagon\_Final.thy}).}, label=lst:goc]{listings/goc_final.thy}
+
 \section{The program and its total correctness}\label{sec:hoare}
 
 \subsection{Programs and triples}
@@ -863,11 +1053,16 @@ We list the limits of the results.
 \begin{itemize}
 \item Exact arithmetic only.  A floating-point version would have to account for rounding in the
 weights and the powers (\cref{sec:fp}).
-\item The pattern at the stop.  The theorems say that the run stops, and that at the stop every strict
-peak of the sampled pattern outside the band, other than the main lobe, is at or below $-20$~dB.
-They say nothing about the pattern between grid points, or about a sidelobe whose top falls on two
-grid points of equal value.  At some focus angles the stopped pattern is above $-20$~dB in both
-places (\cref{sec:unseen}); this is shown by simulation, not proved.
+\item The pattern at the stop of the implemented method.  \Cref{thm:dc,thm:oct} say that the run
+stops, and that at the stop every strict peak of the sampled pattern outside the band, other than the
+main lobe, is at or below $-20$~dB.  They say nothing about the pattern between grid points, or about a
+sidelobe whose top falls on two grid points of equal value; at some focus angles the stopped pattern is
+above $-20$~dB in both places (\cref{sec:unseen}), which is shown by simulation, not proved.  For the
+changed method of \cref{sec:changed} the level is proved at every real direction outside the main lobe,
+where the main lobe is measured down to $-20$~dB less the margin.
+\item The band for the changed method.  \Cref{thm:gstops} is proved without a band.  With a band, the
+guarantee of \cref{thm:guarantee} has an exception (a lobe whose top lies inside the band may reach
+outside it), and termination of the changed method with a band is not proved.
 \item The positions.  The arrays are fixed binary64 positions.  Robustness under perturbation of the
 positions is not proved.
 \item The circular array.  \Cref{thm:circ} concerns (S), not the implemented test (I), and only the
@@ -889,7 +1084,9 @@ most 20 corrections and for the regular octagon after at most 10, for every focu
 rule; for a large circular array its
 stopping condition cannot be met at all.  Stopping is not the same as success: the test sees only
 the sampled pattern and its strict peaks, and at isolated focus angles the method stops with a
-sidelobe above $-20$~dB that the test misses (\cref{sec:unseen}).  The positive result needed a computer-assisted proof, and
+sidelobe above $-20$~dB that the test misses (\cref{sec:unseen}).  A small change of the test removes
+this: the changed method stops on both arrays, and at the stop the true pattern is at or below $-20$~dB
+at every direction outside the main lobe (\cref{sec:changed}).  The positive result needed a computer-assisted proof, and
 we obtained one whose computational part is itself a theorem of Isabelle/HOL.  The total-correctness
 triple then turns the theorem about runs into a theorem about the program, with no iteration cap.
 
@@ -922,7 +1119,12 @@ checker, its soundness proof, the circular array and the 6{,}464 pieces, ending 
 same for the octagon, ending with \cref{thm:oct} (about 5 hours);
 \item \texttt{tools/build\_utp.sh Double\_Cross\_UTP} and \texttt{tools/build\_utp.sh Octagon\_UTP} build
 the programs and \cref{thm:hoare} on top of them (about 7 minutes each); they need the ITree/UTP
-libraries ported to Isabelle2026, and the heaps that the option \texttt{-b} above keeps.
+libraries ported to Isabelle2026, and the heaps that the option \texttt{-b} above keeps;
+\item \texttt{isabelle build -b -d . -d Guarantee -d GChecker Guarantee\_Checker} builds
+\cref{thm:guarantee} and the changed checker (under a minute);
+\item \texttt{isabelle build -b -d . -d Guarantee -d GChecker -d Pieces\_G -j 1 -o threads=10
+GDCX\_Final} (about 7 hours) and then the same with \texttt{-d Pieces\_G -d Pieces\_GOct} and
+\texttt{GOCX\_Final} (about 3 hours) build \cref{thm:gstops} for the double cross and the octagon.
 \end{itemize}
 
 \bibliographystyle{amsplain}
